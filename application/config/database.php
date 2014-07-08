@@ -111,5 +111,28 @@ $db['default'] = array(
 	'save_queries' => TRUE
 );
 
+$db['production'] = array(
+	'dsn'	=> '',
+	'hostname' => 'mysql.1freehosting.com',
+	'username' => 'u502215265_root',
+	'password' => 'E9o74KfN5190',
+	'database' => 'u502215265_hotel',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => TRUE,
+	'db_debug' => TRUE,
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'autoinit' => TRUE,
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
+
 /* End of file database.php */
 /* Location: ./application/config/database.php */

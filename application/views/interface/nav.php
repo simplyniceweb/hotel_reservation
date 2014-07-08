@@ -1,10 +1,10 @@
 <?php $rt_id = (isset($rooms[1][0]->room_type_id))? $rooms[1][0]->room_type_id : NULL ?>
 <div class="main_menu">
     <div class="container-fluid">
-    	<div class="col-md-3">
+    	<div class="col-md-12 col-lg-3">
     	<img class="logo pull-left" src="<?=base_url()?>assets/icons/logo.png"/>
        </div>
-       <div class="col-md-9">
+       <div class="col-md-12 col-lg-9">
         <ul class="nav nav-pills pull-right">
             <li<?php if($active==1):?> class="active"<?php endif;?>><a href="<?=base_url()?>">Home</a></li>
             <li class="menu-drop<?php if($active==2):?> active<?php endif;?>">
@@ -23,6 +23,9 @@
 			  ?>
               	<li><a href="#">No room type(s) yet</a></li>
               <?php endif; ?>
+              <li role="presentation" class="divider"></li>
+              <li><a href="#">Room payment</a></li>
+              <li><a href="#">Reservation status</a></li>
               </ul>
             </div>
             </li>

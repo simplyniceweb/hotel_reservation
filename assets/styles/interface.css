@@ -67,6 +67,11 @@ body {
 .btn-group.active {
 	border-radius: 3px;
 }
+.main_menu .btn-group.open .dropdown-toggle {
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+}
 
 /* Container */
 .wrapper {

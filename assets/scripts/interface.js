@@ -12,12 +12,17 @@
 	if($('#slider').length>0) {
 		$('#slider').nivoSlider();
 	}
+
 	if($('.datepicker').length>0) {
 		$('.datepicker').datepicker({format:'yyyy-mm-dd'});
 	}
 
 	var conf = {
-		amenities_anchor: '.amenities-anchor'
+		amenities_anchor: '.amenities-anchor',
+		book_room: '#bookRoom',
+		book_room_trigger: 'a[data-target=#bookRoom]',
+		book_info: '.book-info-',
+		customer_info: '.customer_info',
 	}
 
 	var func = {
@@ -32,11 +37,44 @@
 				}
 				$('.amenities-'+id).slideToggle();
 			})
+		},
+		show_booking_form: function(){
+			return this.delegate(conf.book_room_trigger, "click", function(){
+				var me = $(this),
+				id = me.data('id'),
+				info = $(conf.book_info+id).data('info'),
+				action = $(conf.book_room+' form').attr('action');
+
+				$(conf.book_room+' form').attr('action', action+'?room_id='+id);
+				config.doc.options_(info);
+			})
+		},
+		options_:function(info) {
+			$('.adult_drop, .child_drop').empty();
+			var arr = info.split("-"), i = 0, adult = parseInt(arr[0])+1, child = parseInt(arr[1])+1;
+			for(i=1;i<adult;i++) {
+				$('.adult_drop').append('<option value='+i+'>'+i+'</option>');
+			}
+			for(i=1;i<child;i++) {
+				$('.child_drop').append('<option value='+i+'>'+i+'</option>');
+			}
+		},
+		book_1: function() {
+			return this.delegate(conf.book_room+' .process', "click", function(e){
+				e.preventDefault();
+				console.log('Stop submitting..');
+				if($(conf.customer_info).hasClass('hide')) {
+					$(conf.customer_info).removeClass('hide');
+				}
+				$(conf.book_room).animate({ scrollTop: $(conf.customer_info).offset().top}, 'slow');
+			})
 		}
 	}
 
 	$.extend(config.doc, func);
 	config.doc.amenities();
+	config.doc.show_booking_form();
+	config.doc.book_1();
 
 	var simplynice_conf = {
 		wrapper: '.simplyniceGallery',

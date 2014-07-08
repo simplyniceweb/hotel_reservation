@@ -40,7 +40,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/hotel';
+$url = array('http://localhost/hotel_reservation','http://hotel-reservation.fulba.com');
+$config['base_url']	= $url[0];
 
 /*
 |--------------------------------------------------------------------------

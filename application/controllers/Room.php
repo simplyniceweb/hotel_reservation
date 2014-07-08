@@ -37,6 +37,7 @@ class Room extends CI_Controller {
 				$max_adult = $this->input->post('max_adult');
 				$max_child = $this->input->post('max_child');
 				$room_rate = $this->input->post('room_rate');
+				$room_count = $this->input->post('room_count');
 				$data = array(
 					'room_type_id'  => $room_type_id,
 					'room_name' => $name,
@@ -45,6 +46,7 @@ class Room extends CI_Controller {
 					'max_adult'    => $max_adult,
 					'max_child'    => $max_child,
 					'room_rate'    => $room_rate,
+					'room_count'   => $room_count,
 					'view_status'  => 5,
 					'created_at'   => $now,
 					'modified_at'  => $now,
@@ -109,7 +111,7 @@ class Room extends CI_Controller {
 			redirect('');
 		}
 
-		$query = $this->db->get_where('room', array('room.room_type_id' => $room_type_id, 'view_status' => 5));
+		$query = $this->db->get_where('room', array('room.room_type_id' => $room_type_id, 'room_count > ' => 0,  'view_status' => 5));
 		$result = array($query->result(), $check->result(), $query->num_rows());
 
 		$data = array(

@@ -16,6 +16,7 @@ $countries = array("Afghanistan", "Albania", "Algeria", "American Samoa", "Andor
 	$image = $this->Rooms_Model->get_image($room->room_id);
 	$amenities = $this->Rooms_Model->get_amenities($room->room_id);
 	?>
+    <span class="book-info-<?=$room->room_id?>" data-info="<?=$room->max_adult?>-<?=$room->max_child?>"></span>
       <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
           <img src="<?=base_url()?>assets/images/rooms/<?=$image?>"/>
@@ -95,22 +96,27 @@ $countries = array("Afghanistan", "Albania", "Algeria", "American Samoa", "Andor
 				array(
 					'id' => 'adult',
 					'type' => 'dropdown',
+					'class' => 'adult_drop',
 					'options' => array(
-						'1' => '1',
-						'2' => '2'
+						'-1' => 'Please select',
 					)
 				),
 				array(
 					'id' => 'child',
 					'type' => 'dropdown',
+					'class' => 'child_drop',
 					'options' => array(
-						'0' => '0',
-						'1' => '1',
-						'2' => '2'
+						'-1' => 'Please select',
 					)
+				),
+				array(
+					'id'   => 'process',
+					'type' => 'submit',
+					'class' => 'process pull-right'
 				),
             ));
         ?>
+        <div class="customer_info hide">
         <h4 class="text-info">Guest Information</h4>
         <hr/>
         <?php
@@ -149,14 +155,22 @@ $countries = array("Afghanistan", "Albania", "Algeria", "American Samoa", "Andor
 				array(
 					'id' => 'zip_postal'
 				),
+				/*
 				array(
 					'id' => 'country',
 					'type' => 'dropdown',
 					'options' => $countries
 				),
+				*/
+				array(
+					'id'   => 'Reserve',
+					'type' => 'submit',
+					'class' => 'btn-warning process pull-right'
+				),
 			));
 		?>
-        <?= $this->form_builder->close_form(); ?>
+        <?=$this->form_builder->close_form()?>
+        </div>
       </div>
       <div class="modal-footer" style="border: none">
       </div>

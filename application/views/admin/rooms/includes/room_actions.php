@@ -11,6 +11,7 @@
 	$max_adult = (isset($room->max_adult))? $room->max_adult : NULL;
 	$max_child = (isset($room->max_child))? $room->max_child : NULL;
 	$room_rate = (isset($room->room_rate))? $room->room_rate : NULL;
+	$room_count = (isset($room->room_count))? $room->room_count : NULL;
 ?>
 <?=$this->form_builder->open_form(array('action' => 'room/create_room'.$get)); ?>
 <?php
@@ -39,6 +40,10 @@
 		array(
 			'id' => 'room_rate',
 			'value' => $room_rate
+		),
+		array(
+			'id' => 'room_count',
+			'value' => $room_count
 		),
 		array(
 			'id' => 'room_type_id',
