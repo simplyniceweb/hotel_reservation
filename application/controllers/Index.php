@@ -25,13 +25,24 @@ class Index extends CI_Controller {
 		$this->load->view('interface/pages/rooms', $data);
 	}
 
-	public function facilities() {
+	public function room_payment() {
 		$data = array(
 			'active' => 3,
+			'drop_active' => 1,
 			'room_type' => $this->db->get_where('room_type', array('view_status' => 5)),
-			'title' => $this->config->item('website_name') . ' - Facilities'
+			'title' => $this->config->item('website_name') . ' - Room Payment'
 		);
-		$this->load->view('interface/pages/facilities', $data);
+		$this->load->view('interface/pages/room_payment', $data);
+	}
+
+	public function reservation_status() {
+		$data = array(
+			'active' => 3,
+			'drop_active' => 2,
+			'room_type' => $this->db->get_where('room_type', array('view_status' => 5)),
+			'title' => $this->config->item('website_name') . ' - Reservation Status'
+		);
+		$this->load->view('interface/pages/reservation_status', $data);
 	}
 
 	public function house_rules() {
@@ -59,6 +70,23 @@ class Index extends CI_Controller {
 			'title' => $this->config->item('website_name') . ' - Contact'
 		);
 		$this->load->view('interface/pages/contact', $data);
+	}
+
+	public function messages() {
+		$title = $this->session->flashdata('title');
+		$msg = $this->session->flashdata('msg');
+		if(!isset($title) || empty($title) || !isset($msg) || empty($msg)) {
+			redirect('');
+		}
+
+		$data = array(
+			'active' => 0,
+			'h1' => $title,
+			'msg' => $msg,
+			'room_type' => $this->db->get_where('room_type', array('view_status' => 5)),
+			'title' => $this->config->item('website_name')
+		);
+		$this->load->view('interface/pages/messages', $data);
 	}
 }
 

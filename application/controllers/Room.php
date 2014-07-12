@@ -135,4 +135,135 @@ class Room extends CI_Controller {
 		}
 		return $data;
 	}
+
+	public function rand_string( $length ) {
+		$i = 0;
+		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		// Loop until code does not exist
+		while ($i < 1) {
+			$code = substr(str_shuffle($chars), 0, $length);
+			$check_code = $this->db->get_where('reservations', array('reservation_code' => $code, 'view_status' => 5));
+			if($check_code->num_rows() < 1) {
+				$i = 1;
+			}
+		}
+
+		return $code;
+	}
+
+	public function book() {
+		// TODO: add a proper error message
+		$this->session->set_flashdata('title', 'Room reservation');
+		$room_id = self::check_integer((int) $this->input->get('room_id'));
+		if($room_id == 'error') {
+			$this->session->set_flashdata('msg', 'invalid_room_id');
+		}
+
+		// Global
+		$now = date('Y-m-d');
+		$room = $this->db->get_where('room', array('room_id' => $room_id, 'view_status' => 5), 1);
+		if($room->num_rows() < 1) {
+			$this->session->set_flashdata('msg', 'invalid_room_id');
+		}
+		$room = $room->result();
+
+
+		// Booking details
+		$check_in = $this->input->get('check_in');
+		$check_out = $this->input->get('check_out');
+
+		// If check in is greater than check out
+		// If check out is less than check in
+		// If check in equal to check out
+		$ci = date('Y-m-d', strtotime($check_in));
+		$co = date('Y-m-d', strtotime($check_out));
+		if ($ci > $co || $co < $ci || $ci == $co) {
+			$this->session->set_flashdata('msg', 'date_error');
+		// If check in less than today
+		// If check out less than today
+		} else if($ci < $now || $co < $now) {
+			$this->session->set_flashdata('msg', 'date_error');
+		}
+
+		$adult = (int) $this->input->get('adult');
+		$child = (int) $this->input->get('child');
+
+		// Check if max adult and max child exceed
+		if($adult > $room[0]->max_adult || $child > $room[0]->max_child) {
+			$this->session->set_flashdata('msg', 'max_person_error');
+			//exit('Max person error');
+		}
+
+		// Customer information
+		$code = self::rand_string(7);
+		$title = $this->input->get('title');
+		$first_name = $this->input->get('first_name');
+		$last_name = $this->input->get('last_name');
+		$email_address = $this->input->get('email_address');
+		$address = $this->input->get('address');
+		$city = $this->input->get('city');
+		$province = $this->input->get('province');
+		$zip_postal = $this->input->get('zip_postal');
+
+		$customer_data = array(
+			'reservation_code' => $code,
+			'bill' => $room[0]->room_rate,
+			'title' => $title,
+			'first_name' => $first_name,
+			'last_name' => $last_name,
+			'email_address' => $email_address,
+			'address' => $address,
+			'city' => $city,
+			'province' => $province,
+			'zip_postal' => $zip_postal,
+			'view_status' => 5,
+			'created_at' => $now,
+			'modified_at' => $now,
+		);
+		$this->db->insert('reservations', $customer_data);
+
+		$reservation_id = $this->db->insert_id();
+
+		$reservation_data = array(
+			'reservation_id' => $reservation_id,
+			'room_id' => $room[0]->room_id,
+			'check_in' => $check_in,
+			'check_out' => $check_out,
+			'adult' => $adult,
+			'child' => $child,
+			'view_status' => 5,
+			'created_at' => $now,
+			'modified_at' => $now,
+		);
+		$this->db->insert('reserved_room', $reservation_data);
+
+		self::email_reservation($reservation_id, $email_address);
+	}
+
+	public function email_reservation($reservation_id = NULL, $email = NULL) {
+		//$to = "simplyniceweb@gmail.com";
+		$query = $this->db->get_where('reservations', array('reservation_id' => $reservation_id, 'view_status' => 5))->result();
+		$msg = $this->load->view('email/reservation', array( 'result' => $query, 'id' => $reservation_id ), TRUE);
+
+		// Send email to the customer
+		$this->load->library('email');
+		$this->email->set_newline("\r\n");
+
+		$this->email->from('cocogrovelaiya@gmail.com', 'Laiya Coco Grove');
+		$this->email->to($email);
+		$this->email->subject('Room reservation');
+		$this->email->message($msg);
+		$sent = $this->email->send();
+		if($sent) {
+			$msg = "sent_reserved";
+		} else {
+			$msg = "bad_email_reserved";
+			$object = array( 'view_status' => 4, 'modified_at' => date('Y-m-d') );
+			$this->db->where('reservation_id', $reservation_id);
+			$this->db->update('reservations', $object);
+		}
+		$this->session->set_flashdata('msg', $msg);
+		$this->session->set_flashdata('title', 'Room reservation');
+		redirect('messages');
+	}
 }

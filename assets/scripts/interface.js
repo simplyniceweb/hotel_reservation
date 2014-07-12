@@ -42,10 +42,10 @@
 			return this.delegate(conf.book_room_trigger, "click", function(){
 				var me = $(this),
 				id = me.data('id'),
-				info = $(conf.book_info+id).data('info'),
-				action = $(conf.book_room+' form').attr('action');
+				info = $(conf.book_info+id).data('info');
 
-				$(conf.book_room+' form').attr('action', action+'?room_id='+id);
+				//$(conf.book_room+' form').attr('action', config.base_url+'book?room_id='+id);
+				$('input[name=room_id]').val(id);
 				config.doc.options_(info);
 			})
 		},

@@ -80,13 +80,16 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 $route['rooms'] = "index/rooms";
+$route['book'] = "room/book";
 $route['rooms/(:any)'] = "room/fetch_rooms";
 $route['room_galleries'] = "room/room_galleries";
 
-$route['facilities'] = "index/facilities";
+$route['room_payment'] = "index/room_payment";
+$route['reservation_status'] = "index/reservation_status";
 $route['house-rules'] = "index/house_rules";
 $route['map'] = "index/map";
 $route['contact'] = "index/contact";
+$route['messages'] = "index/messages";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
