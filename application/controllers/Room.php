@@ -8,6 +8,11 @@ class Room extends CI_Controller {
     }
 
 	public function index() {
+		$access = $this->session->userdata('access');
+		if(!$access) {
+			show_404();
+		}
+
 		$msg = $this->session->flashdata('msg');
 		$this->db->select('*');
 		$this->db->from('room_type as rt');
@@ -26,6 +31,11 @@ class Room extends CI_Controller {
 	}
 
 	public function create_room() {
+		$access = $this->session->userdata('access');
+		if(!$access) {
+			show_404();
+		}
+
 		$query = NULL;
 		$rid  = $this->input->get('rid');
 		if ($_SERVER['REQUEST_METHOD'] === 'POST'):
@@ -80,6 +90,11 @@ class Room extends CI_Controller {
 	}
 
 	public function delete_room() {
+		$access = $this->session->userdata('access');
+		if(!$access) {
+			show_404();
+		}
+
 		$rid = $this->input->get('rid');
 		$query = $this->db->get_where('room', array('room_id' => $rid), 1);
 		if(isset($rid) && !is_null($rid)):
@@ -173,6 +188,10 @@ class Room extends CI_Controller {
 		$check_in = $this->input->get('check_in');
 		$check_out = $this->input->get('check_out');
 
+		$unix_date = strtotime($check_out) - strtotime($check_in);
+		$how_many_days = floor($unix_date/3600/24);
+		$per_room_total = $room[0]->room_rate*floor($unix_date/3600/24);
+
 		$ci = new \DateTime($check_in);
 		$co = new \DateTime($check_out);
 		$in_out  = $ci->diff($co)->format('%r%a');
@@ -216,7 +235,7 @@ class Room extends CI_Controller {
 
 		$customer_data = array(
 			'reservation_code' => $code,
-			'bill' => $room[0]->room_rate,
+			'bill' => $per_room_total,
 			'title' => $title,
 			'first_name' => $first_name,
 			'last_name' => $last_name,

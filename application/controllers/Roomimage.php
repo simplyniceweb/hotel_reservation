@@ -11,6 +11,11 @@ class Roomimage extends CI_Controller {
     }
 
 	public function index() {
+		$access = $this->session->userdata('access');
+		if(!$access) {
+			show_404();
+		}
+
 		$this->db->select('rm.room_image_id as image_id, r.room_id as room_id, r.room_name as name, r.room_number as number');
 		$this->db->from('room_images as rm');
 		$this->db->join('room as r', 'r.room_id = rm.room_id');
@@ -32,12 +37,22 @@ class Roomimage extends CI_Controller {
 	}
 
 	public function room_images() {
+		$access = $this->session->userdata('access');
+		if(!$access) {
+			show_404();
+		}
+
 		$rid = $this->input->get('rid');
 		$query = $this->db->get_where('room_images', array('room_id' => $rid, 'view_status' => 5));
 		$this->load->view("admin/rooms/append/images", array('result' => $query->result(), 'count' => $query->num_rows()));
 	}
 
 	public function create_room_image() {
+		$access = $this->session->userdata('access');
+		if(!$access) {
+			show_404();
+		}
+
 		if ($_SERVER['REQUEST_METHOD'] === 'POST'):
 			$x = 0;
 			$now = date('Y-m-d');
@@ -193,6 +208,11 @@ class Roomimage extends CI_Controller {
 	}
 
 	public function delete_room_image() {
+		$access = $this->session->userdata('access');
+		if(!$access) {
+			show_404();
+		}
+
 		$x = 0;
 		$rid = $this->input->get('rid');
 		$query = $this->db->get_where('room_images', array('room_id' => $rid, 'view_status' => 5));

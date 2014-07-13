@@ -8,6 +8,10 @@ class Transactions extends CI_Controller {
     }
 
 	public function index() {
+		$access = $this->session->userdata('access');
+		if(!$access) {
+			show_404();
+		}
 
 		$transaction_status = $this->uri->segment(2);
 		if ( !$transaction_status ) {
@@ -23,6 +27,11 @@ class Transactions extends CI_Controller {
 	}
 
 	public function fetch_transactions($status) {
+		$access = $this->session->userdata('access');
+		if(!$access) {
+			show_404();
+		}
+
 		$select = 't.transaction_id, t.proof, t.notes, t.transaction_status, pt.payment_name, r.reservation_code, r.reservation_id';
 		$query = $this->db->select($select)
 		->from('transactions as t')
@@ -37,6 +46,11 @@ class Transactions extends CI_Controller {
 	}
 
 	public function reservartion_details() {
+		$access = $this->session->userdata('access');
+		if(!$access) {
+			show_404();
+		}
+
 		$rid = (int) $this->uri->segment(3);
 		$query = $this->db->get_where('reservations', array('reservation_id' => $rid, 'view_status' => 5));
 		if($query->num_rows() < 1) {
@@ -47,6 +61,11 @@ class Transactions extends CI_Controller {
 	}
 
 	public function transactionToggleStatus() {
+		$access = $this->session->userdata('access');
+		if(!$access) {
+			show_404();
+		}
+
 		$status = (int) $this->uri->segment(3);
 		$tid    = (int) $this->uri->segment(4);
 		$query = $this->db->get_where('transactions', array('transaction_id' => $tid, 'view_status' => 5));

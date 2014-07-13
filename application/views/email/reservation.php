@@ -41,9 +41,13 @@ table tbody tr td {
 
 			$unix_date = strtotime($reservations[0]->check_out) - strtotime($reservations[0]->check_in);
 			$how_many_days = floor($unix_date/3600/24);
-			$per_room_total = $room[0]->room_rate*floor($unix_date/3600/24);
-			$total += $per_room_total;
+			//$per_room_total = $room[0]->room_rate*floor($unix_date/3600/24);
+			$total += $row->bill;
             ?>
+        	<tr>
+            	<td style="min-width: 300px">Status:</td>
+                <td style="min-width: 300px; color: red">Pending</td>
+            </tr>
         	<tr>
             	<td style="min-width: 300px">Reservation code:</td>
                 <td style="min-width: 300px"><?=$row->reservation_code?></td>
@@ -76,12 +80,6 @@ table tbody tr td {
             	<td style="min-width: 300px">Rate per night:</td>
                 <td style="min-width: 300px">Php <?=number_format($room[0]->room_rate, 2)?></td>
             </tr>
-            <!--
-        	<tr>
-            	<td style="min-width: 300px">Per Room total:</td>
-                <td style="min-width: 300px">Php <?=number_format($per_room_total, 2)?></td>
-            </tr>
-            -->
         </tbody>
     </table>
     <?php endforeach; ?>
