@@ -31,8 +31,12 @@ table tbody tr td {
 	}
 	?>
     <p>Dear <?=$title.'. '.ucfirst($row->first_name).' '.ucfirst($row->last_name)?>,</p>
+    <?php if ($status == 'Pending'): ?>
     <p>Thank you for choosing to stay with us at the <?=$webname?>. We are pleased to confirm your reservation as follows:</p>
     <p style="color:#FF0004">Note: Please keep the reservation code as you will use it to check reservation status and paying.</p>
+    <?php else: ?>
+    <p>Your reservation status has been updated by our management.</p>
+    <?php endif; ?>
 	<table>
     	<tbody>
 			<?php
@@ -46,7 +50,7 @@ table tbody tr td {
             ?>
         	<tr>
             	<td style="min-width: 300px">Status:</td>
-                <td style="min-width: 300px; color: red">Pending</td>
+                <td style="min-width: 300px; color: red"><?=$status?></td>
             </tr>
         	<tr>
             	<td style="min-width: 300px">Reservation code:</td>
@@ -91,6 +95,7 @@ table tbody tr td {
             </tr>
         </tbody>
     </table>
+    <?php if ($status == 'Pending'): ?>
     <br/>
     <p>You have 24 hours to confirm your reservation(s).</p>
     <p>To check for your reservation status, copy the reservation code and visit the link below:</p>
@@ -99,6 +104,7 @@ table tbody tr td {
     <p><a href="<?=base_url()?>room_payment" target="_blank">Reservation payment</a></p>
     <p>We look forward to the pleasure of having you as our guest at the <?=$webname?>.</p>
     <br/>
+    <?php endif; ?>
     <p>Sincerely,</p>
     <br/>
     <p>Management</p>

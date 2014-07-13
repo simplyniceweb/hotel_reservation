@@ -72,7 +72,8 @@
 		},
 		transaction_toggle_status: function() {
 			return this.delegate(conf.transaction_status, "change", function(){
-				var me = $(this), status = me.val(), payment_id = me.data('id');
+				var me = $(this), status = me.val(), payment_id = me.data('id'), select_status = me.data('status');
+				if(select_status == 'disabled') return false;
 				if( confirm("Are you sure you want to change the status of this payment?")) {
 					$.get( config.base_url+"transactions/transactionToggleStatus/"+status+"/"+payment_id, function( data ) {
 						$('tr.row-'+payment_id).slideToggle();

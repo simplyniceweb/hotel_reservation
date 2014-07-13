@@ -14,14 +14,22 @@
 	?>
         <tr class="row-<?=$row->transaction_id?>">
             <td><?=$row->payment_name?></td>
-            <td><a href="#" class="reservation-details" data-id="<?=$row->reservation_id?>" data-toggle="modal" data-target="#reservationDetails">View</a></td>
             <td>
-                <a href="#" class="notes-proof" data-id="<?=$row->transaction_id?>" data-toggle="modal" data-target="#notesProof">View</a>
+            <a href="#" class="reservation-details" data-id="<?=$row->reservation_id?>" data-toggle="modal" data-target="#reservationDetails"><i class="fa fa-fw fa-eye"></i> View</a>
+            </td>
+            <td>
+                <a href="#" class="notes-proof" data-id="<?=$row->transaction_id?>" data-toggle="modal" data-target="#notesProof"><i class="fa fa-fw fa-eye"></i> View</a>
                 <p class="notes-<?=$row->transaction_id?> hide"><?=$row->notes?></p>
                 <span class="proof-<?=$row->transaction_id?> hide"><?=$row->proof?></span>
             </td>
             <td>
-            	<select class="transaction-status form-control input-sm" data-id="<?=$row->transaction_id?>">
+            	<?php
+                	$stats = ' data-status="enabled"';
+					if ($transaction_status == 4): 
+					$stats = ' data-status="disabled" disabled="disabled"';
+					endif;
+				?>
+            	<select class="transaction-status form-control input-sm" data-id="<?=$row->transaction_id?>"<?=$stats?>>
                 	<option value="1"<?php if ($transaction_status == 1): ?> selected='selected'<?php endif; ?>>Pending</option>
                 	<option value="2"<?php if ($transaction_status == 2): ?> selected='selected'<?php endif; ?>>Processing</option>
                 	<option value="3"<?php if ($transaction_status == 3): ?> selected='selected'<?php endif; ?>>Partial</option>

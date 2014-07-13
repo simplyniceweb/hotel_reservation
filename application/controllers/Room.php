@@ -271,7 +271,7 @@ class Room extends CI_Controller {
 	public function email_reservation($reservation_id = NULL, $email = NULL, $code = NULL) {
 		//$to = "simplyniceweb@gmail.com";
 		$query = $this->db->get_where('reservations', array('reservation_id' => $reservation_id, 'view_status' => 5))->result();
-		$msg = $this->load->view('email/reservation', array( 'result' => $query, 'id' => $reservation_id ), TRUE);
+		$msg = $this->load->view('email/reservation', array( 'result' => $query, 'id' => $reservation_id, 'status' => 'Pending' ), TRUE);
 
 		// Send email to the customer
 		$this->load->library('email');

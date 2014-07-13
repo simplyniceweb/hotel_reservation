@@ -16,7 +16,7 @@ endif;
         </tr>
     	<tr>
         	<td>Bill:</td>
-            <td>Php <?=$row->bill?></td>
+            <td>Php <?=number_format($row->bill, 2)?></td>
         </tr>
     	<tr>
         	<td>Name of Guest:</td>
@@ -24,23 +24,23 @@ endif;
         </tr>
     	<tr>
         	<td>Email Address:</td>
-            <td>Php <?=$row->email_address?></td>
+            <td><?=$row->email_address?></td>
         </tr>
     	<tr>
         	<td>Address:</td>
-            <td>Php <?=$row->address?></td>
+            <td><?=$row->address?></td>
         </tr>
     	<tr>
         	<td>City:</td>
-            <td>Php <?=$row->city?></td>
+            <td><?=$row->city?></td>
         </tr>
     	<tr>
         	<td>Province:</td>
-            <td>Php <?=$row->province?></td>
+            <td><?=$row->province?></td>
         </tr>
     	<tr>
         	<td>Zip Postal:</td>
-            <td>Php <?=$row->zip_postal?></td>
+            <td><?=$row->zip_postal?></td>
         </tr>
     </tbody>
 </table>
