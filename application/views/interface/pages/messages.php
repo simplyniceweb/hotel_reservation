@@ -28,6 +28,12 @@ switch($msg) {
 	case 'code_invalid':
 			$echo = "The reservation code you input is not valid. Try again.";
 			break;
+	case 'sent_contact':
+			$echo = "Thank you for contacting us. We will get back to you after 24 hours once our management is done reviewing your concerns.";
+			break;
+	case 'bad_email_contact':
+			$echo = "Ooopsss...I think the email you provided is not a valid email or double check your Email address. Thank you!";
+			break;
 	default:
 			$echo = $msg;
 		break;

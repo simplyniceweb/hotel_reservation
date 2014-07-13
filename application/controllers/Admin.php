@@ -28,4 +28,30 @@ class Admin extends CI_Controller {
 		}
 		show_404();
 	}
+
+	public function contact_form() {
+		$this->load->library('email');
+		$this->email->set_newline("\r\n");
+
+		$contact_data = array(
+			'full_name' => $this->input->post('full_name'),
+			'email_address' => $this->input->post('email_address'),
+			'telephone_number' => $this->input->post('telephone_number'),
+			'message' => $this->input->post('message'),
+		);
+
+		$this->email->from($contact_data['email_address'], $contact_data['full_name']);
+		$this->email->to('cocogrovelaiya@gmail.com');
+		$this->email->subject('Guest contact');
+		$this->email->message($contact_data['message']);
+		$sent = $this->email->send();
+		if($sent) {
+			$msg = "sent_contact";
+		} else {
+			$msg = "bad_email_contact";
+		}
+		$this->session->set_flashdata('msg', $msg);
+		$this->session->set_flashdata('title', 'Contact');
+		redirect('messages');
+	}
 }

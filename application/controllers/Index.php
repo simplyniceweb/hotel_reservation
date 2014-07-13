@@ -79,6 +79,9 @@ class Index extends CI_Controller {
 	}
 
 	public function contact() {
+		$this->load->helper('form');
+		$this->load->library('form_builder');
+
 		$data = array(
 			'active' => 6,
 			'room_type' => $this->db->get_where('room_type', array('view_status' => 5)),
