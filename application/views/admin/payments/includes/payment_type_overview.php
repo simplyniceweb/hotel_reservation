@@ -3,6 +3,7 @@
         <tr>
             <th>Name</th>
             <th>Recipient</th>
+            <th>Phone</th>
             <th>Address</th>
             <th>Actions</th>
         </tr>
@@ -12,6 +13,7 @@
         <tr>
             <td><?=$row->payment_name?></td>
             <td><?=$row->recipient_name?></td>
+            <td><?=$row->recipient_phone?></td>
             <td><?=$row->recipient_address?></td>
             <td>
                 <div class="btn-group">

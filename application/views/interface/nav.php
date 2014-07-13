@@ -36,10 +36,14 @@
                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">Transactions</button>
                 <ul class="dropdown-menu" role="menu">
                 	<li<?php if($drop_active == 1):?> class="active"<?php endif; ?>>
-                    	<a href="<?=base_url()?>room_payment">Room payment</a>
+                    	<a href="<?=base_url()?>room_payment">Payment</a>
                     </li>
                     <li<?php if($drop_active == 2):?> class="active"<?php endif; ?>>
                     	<a href="<?=base_url()?>reservation_status">Reservation status</a>
+					</li>
+                    <li class="divider"></li>
+                    <li<?php if($drop_active == 3):?> class="active"<?php endif; ?>>
+                    	<a href="<?=base_url()?>payment_types">Payment Types</a>
 					</li>
                 </ul>
                 </div>

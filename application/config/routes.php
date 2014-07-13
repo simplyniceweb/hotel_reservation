@@ -86,6 +86,7 @@ $route['room_galleries'] = "room/room_galleries";
 
 $route['room_payment'] = "index/room_payment";
 $route['reservation_status'] = "index/reservation_status";
+$route['payment_types'] = "index/payment_types";
 $route['house-rules'] = "index/house_rules";
 $route['map'] = "index/map";
 $route['contact'] = "index/contact";

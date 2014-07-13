@@ -142,7 +142,7 @@ class Room extends CI_Controller {
 		// Loop until code does not exist
 		while ($i < 1) {
 			$code = substr(str_shuffle($chars), 0, $length);
-			$check_code = $this->db->get_where('reservations', array('reservation_code' => $code, 'view_status' => 5));
+			$check_code = $this->db->get_where('reservations', array( 'reservation_code' => $code ));
 			if($check_code->num_rows() < 1) {
 				$i = 1;
 			}
@@ -152,18 +152,19 @@ class Room extends CI_Controller {
 	}
 
 	public function book() {
-		// TODO: add a proper error message
-		$this->session->set_flashdata('title', 'Room reservation');
+		$this->session->set_flashdata('title', 'Something went wrong...');
 		$room_id = self::check_integer((int) $this->input->get('room_id'));
 		if($room_id == 'error') {
 			$this->session->set_flashdata('msg', 'invalid_room_id');
+			redirect('messages');
 		}
 
 		// Global
-		$now = date('Y-m-d');
+		$now = new \DateTime("now");
 		$room = $this->db->get_where('room', array('room_id' => $room_id, 'view_status' => 5), 1);
 		if($room->num_rows() < 1) {
 			$this->session->set_flashdata('msg', 'invalid_room_id');
+			redirect('messages');
 		}
 		$room = $room->result();
 
@@ -172,26 +173,28 @@ class Room extends CI_Controller {
 		$check_in = $this->input->get('check_in');
 		$check_out = $this->input->get('check_out');
 
-		// If check in is greater than check out
-		// If check out is less than check in
-		// If check in equal to check out
-		$ci = date('Y-m-d', strtotime($check_in));
-		$co = date('Y-m-d', strtotime($check_out));
-		if ($ci > $co || $co < $ci || $ci == $co) {
+		$ci = new \DateTime($check_in);
+		$co = new \DateTime($check_out);
+		$in_out  = $ci->diff($co)->format('%r%a');
+		$now_in  = $now->diff($ci)->format('%r%a');
+		$now_out = $now->diff($co)->format('%r%a');
+		// If check in is lower than date today
+		// Check out should not be equal to the date today or lower than the date today
+		if ( $now_in < -0 || $now_out < 0 ) {
 			$this->session->set_flashdata('msg', 'date_error');
-		// If check in less than today
-		// If check out less than today
-		} else if($ci < $now || $co < $now) {
+			redirect('messages?date_error=1');
+		// Lower than check in or higher than check out
+		} else if( $in_out < 1 ) {
 			$this->session->set_flashdata('msg', 'date_error');
+			redirect('messages?date_error=2');
 		}
 
+		// Check if max adult and max child exceed
 		$adult = (int) $this->input->get('adult');
 		$child = (int) $this->input->get('child');
-
-		// Check if max adult and max child exceed
 		if($adult > $room[0]->max_adult || $child > $room[0]->max_child) {
 			$this->session->set_flashdata('msg', 'max_person_error');
-			//exit('Max person error');
+			redirect('messages');
 		}
 
 		// Customer information
@@ -200,10 +203,16 @@ class Room extends CI_Controller {
 		$first_name = $this->input->get('first_name');
 		$last_name = $this->input->get('last_name');
 		$email_address = $this->input->get('email_address');
+		$confirm_email_address = $this->input->get('confirm_email_address');
 		$address = $this->input->get('address');
 		$city = $this->input->get('city');
 		$province = $this->input->get('province');
 		$zip_postal = $this->input->get('zip_postal');
+
+		if ($email_address != $confirm_email_address || empty($email_address) || empty($confirm_email_address)) {
+			$this->session->set_flashdata('msg', 'invalid_email');
+			redirect('messages');
+		}
 
 		$customer_data = array(
 			'reservation_code' => $code,
@@ -217,8 +226,8 @@ class Room extends CI_Controller {
 			'province' => $province,
 			'zip_postal' => $zip_postal,
 			'view_status' => 5,
-			'created_at' => $now,
-			'modified_at' => $now,
+			'created_at' => $now->format('Y-m-d'),
+			'modified_at' => $now->format('Y-m-d'),
 		);
 		$this->db->insert('reservations', $customer_data);
 
@@ -232,15 +241,15 @@ class Room extends CI_Controller {
 			'adult' => $adult,
 			'child' => $child,
 			'view_status' => 5,
-			'created_at' => $now,
-			'modified_at' => $now,
+			'created_at' => $now->format('Y-m-d'),
+			'modified_at' => $now->format('Y-m-d'),
 		);
 		$this->db->insert('reserved_room', $reservation_data);
 
-		self::email_reservation($reservation_id, $email_address);
+		self::email_reservation($reservation_id, $email_address, $code);
 	}
 
-	public function email_reservation($reservation_id = NULL, $email = NULL) {
+	public function email_reservation($reservation_id = NULL, $email = NULL, $code = NULL) {
 		//$to = "simplyniceweb@gmail.com";
 		$query = $this->db->get_where('reservations', array('reservation_id' => $reservation_id, 'view_status' => 5))->result();
 		$msg = $this->load->view('email/reservation', array( 'result' => $query, 'id' => $reservation_id ), TRUE);
@@ -261,9 +270,10 @@ class Room extends CI_Controller {
 			$object = array( 'view_status' => 4, 'modified_at' => date('Y-m-d') );
 			$this->db->where('reservation_id', $reservation_id);
 			$this->db->update('reservations', $object);
+			$this->session->set_flashdata('code', $code);
 		}
 		$this->session->set_flashdata('msg', $msg);
-		$this->session->set_flashdata('title', 'Room reservation');
+		$this->session->set_flashdata('title', 'Room Reservation');
 		redirect('messages');
 	}
 }

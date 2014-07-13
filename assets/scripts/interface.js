@@ -44,7 +44,6 @@
 				id = me.data('id'),
 				info = $(conf.book_info+id).data('info');
 
-				//$(conf.book_room+' form').attr('action', config.base_url+'book?room_id='+id);
 				$('input[name=room_id]').val(id);
 				config.doc.options_(info);
 			})
@@ -55,7 +54,7 @@
 			for(i=1;i<adult;i++) {
 				$('.adult_drop').append('<option value='+i+'>'+i+'</option>');
 			}
-			for(i=1;i<child;i++) {
+			for(i=0;i<child;i++) {
 				$('.child_drop').append('<option value='+i+'>'+i+'</option>');
 			}
 		},

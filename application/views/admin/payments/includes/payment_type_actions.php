@@ -3,6 +3,7 @@
 	$get = (isset($payment_type->payment_id))? '?pid='.$payment_type->payment_id : NULL;
 	$pname = (isset($payment_type->payment_name))? $payment_type->payment_name : NULL;
 	$rname = (isset($payment_type->recipient_name))? $payment_type->recipient_name : NULL;
+	$rphone = (isset($payment_type->recipient_phone))? $payment_type->recipient_phone : NULL;
 	$address = (isset($payment_type->recipient_address))? $payment_type->recipient_address : NULL;
 ?>
 <?=$this->form_builder->open_form(array('action' => 'paymentype/create_payment_type'.$get)); ?>
@@ -16,6 +17,10 @@
 		array(
 			'id' => 'recipient_name',
 			'value' => $rname
+		),
+		array(
+			'id' => 'recipient_phone',
+			'value' => $rphone
 		),
 		array(
 			'id' => 'recipient_address',

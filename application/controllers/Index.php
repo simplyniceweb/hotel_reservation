@@ -26,11 +26,15 @@ class Index extends CI_Controller {
 	}
 
 	public function room_payment() {
+		$this->load->helper('form');
+		$this->load->library('form_builder');
+
 		$data = array(
 			'active' => 3,
 			'drop_active' => 1,
+			'payment_type' => $query = $this->db->get_where('payment_type', array('view_status' => 5))->result(),
 			'room_type' => $this->db->get_where('room_type', array('view_status' => 5)),
-			'title' => $this->config->item('website_name') . ' - Room Payment'
+			'title' => $this->config->item('website_name') . ' - Payment'
 		);
 		$this->load->view('interface/pages/room_payment', $data);
 	}
@@ -43,6 +47,17 @@ class Index extends CI_Controller {
 			'title' => $this->config->item('website_name') . ' - Reservation Status'
 		);
 		$this->load->view('interface/pages/reservation_status', $data);
+	}
+
+	public function payment_types() {
+		$data = array(
+			'active' => 3,
+			'drop_active' => 3,
+			'room_type' => $this->db->get_where('room_type', array('view_status' => 5)),
+			'payment_type' => $query = $this->db->get_where('payment_type', array('view_status' => 5))->result(),
+			'title' => $this->config->item('website_name') . ' - Payment types'
+		);
+		$this->load->view('interface/pages/payment_types', $data);
 	}
 
 	public function house_rules() {
@@ -73,6 +88,7 @@ class Index extends CI_Controller {
 	}
 
 	public function messages() {
+		$code = $this->session->flashdata('code');
 		$title = $this->session->flashdata('title');
 		$msg = $this->session->flashdata('msg');
 		if(!isset($title) || empty($title) || !isset($msg) || empty($msg)) {

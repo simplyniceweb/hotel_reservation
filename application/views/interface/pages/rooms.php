@@ -22,6 +22,7 @@ include(__DIR__.'/../nav.php');
           <div class="caption">
             <h3><?=$room->room_name?></h3>
             <p><?=$room->room_description?>.</p>
+            <p><span class="label label-info">Per day / Php <?=number_format($room->room_rate, 2)?></span></p>
             <p><a href="#" class="amenities-anchor" data-id="<?=$room->room_id?>"><i class="fa fa-plus-circle"></i> Amenities</a></p>
             <div class="amenities-toggle amenities-<?=$room->room_id?>">
             	<?php if(!is_numeric($amenities)) { foreach($amenities as $amenity) { ?>

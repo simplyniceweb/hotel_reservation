@@ -27,9 +27,11 @@ class Paymentype extends CI_Controller {
 			$payment_name = $this->input->post('payment_name');
 			$recipient_name = $this->input->post('recipient_name');
 			$address = $this->input->post('recipient_address');
+			$phone = $this->input->post('recipient_phone');
 			$data = array(
 				'payment_name' => $payment_name,
 				'recipient_name' => $recipient_name,
+				'recipient_phone' => $phone,
 				'recipient_address' => $address
 			);
 			if(isset($pid) && is_numeric($pid)) {
@@ -74,5 +76,54 @@ class Paymentype extends CI_Controller {
 
 		$this->session->set_flashdata('msg', $msg);
 		redirect('roomtype');
+	}
+
+	public function pay() {
+		$now = new \DateTime("now");
+		$notes = $this->input->post('notes');
+		$code = $this->input->post('reservation_code');
+		$payment_type = $this->input->post('payment_type');
+
+
+		$code_valid = $this->db->get_where('reservations', array('reservation_code' => $code, 'view_status' => 5), 1)->num_rows();
+		if ( $code_valid < 1 ) {
+			$this->session->set_flashdata('title', 'Payment');
+			$this->session->set_flashdata('msg', 'code_invalid');
+			redirect('messages');
+		}
+
+		$payment_data = array(
+			'code'            => $code,
+			'payment_type_id' => $payment_type,
+			'notes'           => $notes,
+			'transaction_status' => 1, // ( 1 = Pending / 2 = Processing / 3 = Partial / 4 = Cancelled / 5 = Paid  )
+			'view_status'     => 5,
+			'created_at'      => $now->format('Y-m-d'),
+			'modified_at'     => $now->format('Y-m-d'),
+		);
+
+		// Optional upload
+		$config = array(
+			"upload_path" => "assets/images/payment/",
+			"allowed_types" => "bmp|jpg|png|jpeg|gif|pdf",
+			"encrypt_name" => TRUE,
+			"remove_spaces" => TRUE,
+			"is_image" => '1'
+		);
+
+		$this->load->library('upload', $config);
+		$this->upload->initialize($config);
+		if ( $this->upload->do_upload() ) {
+			$upload_data = $this->upload->data();
+			$payment_data['proof'] = $upload_data['file_name'];
+		} else {
+			$error = array('error' => $this->upload->display_errors());
+			print_r($error);
+			return false;
+		}
+		$this->db->insert('transactions', $payment_data);
+		$this->session->set_flashdata('title', 'Payment');
+		$this->session->set_flashdata('msg', 'success_payment');
+		redirect('messages');
 	}
 }
