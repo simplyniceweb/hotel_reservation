@@ -92,5 +92,7 @@ $route['map'] = "index/map";
 $route['contact'] = "index/contact";
 $route['messages'] = "index/messages";
 
+$route['transactions/(:any)'] = "transactions/index";
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

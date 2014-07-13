@@ -27,7 +27,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Payment Management <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="<?=base_url()?>paymentype">Payment Types</a></li>
-            <li><a href="<?=base_url()?>transactions/index">Transactions</a></li>
+            <li><a href="<?=base_url()?>transactions">Transactions</a></li>
             <li><a href="<?=base_url()?>">Reservations</a></li>
           </ul>
         </li>
