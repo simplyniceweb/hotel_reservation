@@ -40,6 +40,9 @@ class Index extends CI_Controller {
 	}
 
 	public function reservation_status() {
+		$this->load->helper('form');
+		$this->load->library('form_builder');
+
 		$data = array(
 			'active' => 3,
 			'drop_active' => 2,

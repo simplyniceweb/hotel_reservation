@@ -32,7 +32,13 @@ class Transactions extends CI_Controller {
 			show_404();
 		}
 
-		$reservation_status = ($status == 4) ? 1 : 5;
+		$reservation_status = 5;
+		if ($status == 4) {
+			$reservation_status = 1;
+		} else if($status == 5) {
+			$reservation_status = 6;
+		}
+
 		$select = 't.transaction_id, t.proof, t.notes, t.transaction_status, pt.payment_name, r.reservation_code, r.reservation_id';
 		$query = $this->db->select($select)
 		->from('transactions as t')
@@ -82,6 +88,10 @@ class Transactions extends CI_Controller {
 		if ($status == 4):
 			$this->db->where('reservation_code', $transaction[0]->code);
 			$this->db->update('reservations', array("view_status" => 1));
+		// If reservation status is paid
+		elseif ($status == 5):
+			$this->db->where('reservation_code', $transaction[0]->code);
+			$this->db->update('reservations', array("view_status" => 6));
 		endif;
 
 		$send_notification = self::email_reservation($transaction[0]->code, $status);

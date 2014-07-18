@@ -1,5 +1,6 @@
 // JavaScript Document
 (function () {
+	$('.ppover').popover();
 	var conf = {
 		room_img_modal: '#imageModal',
 		room_img_trigger: '.modal-room-img',
