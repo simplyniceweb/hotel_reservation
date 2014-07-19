@@ -6,7 +6,7 @@
             <th>Bill</th>
             <th>Email Address</th>
             <th>Address</th>
-            <th>Action</th>
+            <?php if($active == 1):?><th>Action</th><?php endif;?>
         </tr>
     </thead>
     <tbody>
@@ -29,6 +29,7 @@
             	<a href="javascript:void(0);" class="ppover" data-toggle="popover" title="Address" 
                 data-content="<?=$res->address.", ".$res->city.", ".$res->province.", ".$res->zip_postal?>"><i class="fa fa-eye"></i> View</a>
             </td>
+            <?php if($active == 1):?>
             <td>
                 <div class="btn-group">
                 <!--
@@ -39,6 +40,7 @@
                   <i class="fa fa-fw fa-trash-o"></i> Delete / Cancel</a>
                 </div>
             </td>
+            <?php endif;?>
         </tr>
     <?php } ?>
     </tbody>

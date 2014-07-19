@@ -18,9 +18,17 @@ class Reservations extends CI_Controller {
 			$reservation_status = 5;
 		}
 
+		if ($reservation_status == 5) {
+			$active = 1;
+		} else if ($reservation_status == 1) {
+			$active = 2;
+		} else if ($reservation_status == 6) {
+			$active = 3;
+		}
+
 		$msg = $this->session->flashdata('msg');
 		$data = array(
-			'active' => 1,
+			'active' => $active,
 			'msg'    => (isset($msg))? $msg : NULL,
 			'title'  => $this->config->item('website_name') . '- Dashboard',
 			'reservations' => $query = $this->db->get_where('reservations', array('view_status' => $reservation_status))

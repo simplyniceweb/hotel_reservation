@@ -1,6 +1,12 @@
 // JavaScript Document
 (function () {
-	$('.ppover').popover();
+	$( ".ppover" ).popover();
+	$('body').on('click', function (e) {
+		if ($(e.target).data('toggle') !== 'popover'
+			&& $(e.target).parents('.popover.in').length === 0) { 
+			$('[data-toggle="popover"]').popover('hide');
+		}
+	});
 	var conf = {
 		room_img_modal: '#imageModal',
 		room_img_trigger: '.modal-room-img',
