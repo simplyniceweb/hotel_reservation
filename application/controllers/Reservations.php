@@ -44,4 +44,18 @@ class Reservations extends CI_Controller {
 		$this->session->set_flashdata('msg', 'delete');
 		redirect('reservations');
 	}
+
+	public function check_date() {
+		$room_id = $this->input->post_get('room_id');
+		$check_in = $this->input->post_get('check_in');
+		$check_out = $this->input->post_get('check_out');
+
+		$arg = "SELECT * FROM `reserved_room` WHERE `check_in` BETWEEN '".$check_in."' AND '".$check_out."' OR `check_out` BETWEEN '".$check_in."' AND '".$check_out."' AND `room_id` = ".$room_id." AND `view_status` = 5";
+		$query = $this->db->query($arg);
+
+		if ( is_array($query->result()) && count($query->result()) > 0 ) {
+			return $this->load->view("interface/append/invalid_date", ["object" => $query->result()]);
+		}
+		return $this->output->set_output(1);
+	}
 }

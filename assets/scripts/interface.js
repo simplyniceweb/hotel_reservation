@@ -23,6 +23,7 @@
 		book_room_trigger: 'a[data-target=#bookRoom]',
 		book_info: '.book-info-',
 		customer_info: '.customer_info',
+		room_id: 0,
 	}
 
 	var func = {
@@ -46,6 +47,7 @@
 
 				$('input[name=room_id]').val(id);
 				config.doc.options_(info);
+				conf.room_id = id;
 			})
 		},
 		options_:function(info) {
@@ -61,11 +63,20 @@
 		book_1: function() {
 			return this.delegate(conf.book_room+' .process', "click", function(e){
 				e.preventDefault();
-				console.log('Stop submitting..');
-				if($(conf.customer_info).hasClass('hide')) {
-					$(conf.customer_info).removeClass('hide');
-				}
-				$(conf.book_room).animate({ scrollTop: $(conf.customer_info).offset().top}, 'slow');
+				var c_in = $("#check_in").val(), c_out = $("#check_out").val(), id = conf.room_id;
+				$.get( config.base_url+"reservations/check_date?check_in="+c_in+"&check_out="+c_out+"&room_id="+id, function( data ) {
+					if (data == 1) {
+						$('.invalid-date').remove();
+						if($(conf.customer_info).hasClass('hide')) {
+							$(conf.customer_info).removeClass('hide');
+						}
+						$(conf.book_room).animate({ scrollTop: $(conf.customer_info).offset().top}, 'slow');
+						return false;
+					}
+					$('.invalid-date').remove();
+					$('.customer_info').before( data );
+					$(conf.customer_info).addClass( 'hide' );
+				});
 			})
 		}
 	}

@@ -94,6 +94,8 @@ $route['messages'] = "index/messages";
 
 $route['transactions/(:any)'] = "transactions/index";
 $route['reservations/(:any)'] = "reservations/index";
+$route['reservations/cancel_reservation'] = "reservations/cancel_reservation";
+$route['reservations/check_date'] = "reservations/check_date";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
