@@ -15,6 +15,13 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<li class="dropdown">
+        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Content Management <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="<?=base_url()?>">Homepage</a></li>
+                <li><a href="<?=base_url()?>contentmanagement/house_rules">House rules</a></li>
+            </ul>
+        </li>
+      	<li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Room Management <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="<?=base_url()?>roomtype">Room Types</a></li>
