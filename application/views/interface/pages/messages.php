@@ -34,6 +34,10 @@ switch($msg) {
 	case 'bad_email_contact':
 			$echo = "Ooopsss...I think the email you provided is not a valid email or double check your Email address. Thank you!";
 			break;
+	case '24hours_passed':
+			$echo = 'Apologies as your reservation has been expired, feel free to create a new reservation.';
+			$echo .= '<br/>Note: Reservation needs to be confirmed within 24 hours.';
+		break;
 	default:
 			$echo = $msg;
 		break;

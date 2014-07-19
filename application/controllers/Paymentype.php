@@ -99,11 +99,25 @@ class Paymentype extends CI_Controller {
 		$code = $this->input->post('reservation_code');
 		$payment_type = $this->input->post('payment_type');
 
-
-		$code_valid = $this->db->get_where('reservations', array('reservation_code' => $code, 'view_status' => 5), 1)->num_rows();
-		if ( $code_valid < 1 ) {
+		// Validate code
+		$code_valid = $this->db->get_where('reservations', array('reservation_code' => $code, 'view_status' => 5), 1);
+		if ( $code_valid->num_rows() < 1 ) {
 			$this->session->set_flashdata('title', 'Payment');
 			$this->session->set_flashdata('msg', 'code_invalid');
+			redirect('messages');
+		}
+
+		// Check if 24 hours had passed
+		$now = date('Y-m-d H:i:s');
+		$reservation_date = $code_valid->result();
+		$date_created = strtotime($reservation_date[0]->created_at);
+		$timediff = strtotime($now) - $date_created;
+		if($timediff > 86400){
+			// echo "Expired!";
+			$this->db->where('reservation_id', $reservation_date[0]->reservation_id);
+			$this->db->update('reservations', ["view_status" => 1]);
+			$this->session->set_flashdata('title', 'Payment');
+			$this->session->set_flashdata('msg', '24hours_passed');
 			redirect('messages');
 		}
 

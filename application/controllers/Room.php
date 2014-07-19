@@ -245,8 +245,8 @@ class Room extends CI_Controller {
 			'province' => $province,
 			'zip_postal' => $zip_postal,
 			'view_status' => 5,
-			'created_at' => $now->format('Y-m-d'),
-			'modified_at' => $now->format('Y-m-d'),
+			'created_at' => $now->format('Y-m-d H:i:s'),
+			'modified_at' => $now->format('Y-m-d H:i:s'),
 		);
 		$this->db->insert('reservations', $customer_data);
 
@@ -260,8 +260,8 @@ class Room extends CI_Controller {
 			'adult' => $adult,
 			'child' => $child,
 			'view_status' => 5,
-			'created_at' => $now->format('Y-m-d'),
-			'modified_at' => $now->format('Y-m-d'),
+			'created_at' => $now->format('Y-m-d H:i:s'),
+			'modified_at' => $now->format('Y-m-d H:i:s'),
 		);
 		$this->db->insert('reserved_room', $reservation_data);
 
