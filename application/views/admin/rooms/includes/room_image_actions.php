@@ -1,6 +1,9 @@
 <?php
-	foreach($rooms as $rm) {
-		$r[$rm->room_id] = $rm->room_name;
+	$r = ['' => 'Select a room'];
+	if ( is_array($rooms) ) {
+		foreach($rooms as $rm) {
+			$r[$rm->room_id] = $rm->room_name;
+		}
 	}
 ?>
 <?=$this->form_builder->open_form(array('action' => 'roomimage/create_room_image', 'enctype' => 'multipart/form-data')); ?>

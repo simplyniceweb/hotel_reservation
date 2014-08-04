@@ -6,6 +6,11 @@ $thumb_label = array(
 	'<span class="text-info">C</span>ELEBRATIONS',
 	'<span class="text-info">A</span>CTIVITIES',
 );
+$caption = [
+	'We have a white beach, swimming pool, pool table, table hockey and much more',
+	'Celebrate your special day with us! We offer good packages',
+	'Join us as we open our resort for amazing and memorable activities',
+];
 ?>
 
 <div class="home-wrapper">
@@ -26,7 +31,7 @@ $thumb_label = array(
             <h4 class="title"><?=$thumb_label[$i-1]?></h4>
             <img src="<?=base_url()?>assets/images/intro/<?=$i?>.jpg" alt="...">
             <div class="caption">
-                <p>We have a white beach, swimming pool, pool table, table hockey and much more</p>
+                <p><?=$caption[$i-1];?></p>
             </div>
         </div>
       </div>

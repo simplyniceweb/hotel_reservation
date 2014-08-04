@@ -3,7 +3,7 @@
         <tr>
             <th>Name</th>
             <th>Description</th>
-            <th>Availability</th>
+            <!-- <th>Availability</th> -->
             <th>Actions</th>
         </tr>
     </thead>
@@ -12,7 +12,7 @@
         <tr>
             <td><?=$row->name?></td>
             <td><?=$row->description?></td>
-            <td><?=$row->availability?></td>
+            <!-- <td><?=$row->availability?></td> -->
             <td>
                 <div class="btn-group">
                   <a href="<?=base_url()?>roomtype/create_room_type?rtid=<?=$row->room_type_id?>" class="btn btn-primary btn-xs">

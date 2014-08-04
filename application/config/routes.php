@@ -93,7 +93,7 @@ $route['contact'] = "index/contact";
 $route['messages'] = "index/messages";
 
 $route['transactions/(:any)'] = "transactions/index";
-$route['reservations/(:any)'] = "reservations/index";
+$route['reservations/(:num)'] = "reservations/index";
 $route['reservations/cancel_reservation'] = "reservations/cancel_reservation";
 $route['reservations/check_date'] = "reservations/check_date";
 

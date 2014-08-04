@@ -64,7 +64,7 @@ class Index extends CI_Controller {
 	}
 
 	public function house_rules() {
-		$rules = $this->db->get_where('house_rules', ['view_status' => 5]);
+		$rules = $this->db->get_where('house_rules', array('view_status' => 5));
 		$data = array(
 			'active' => 4,
 			'rules'  => ( $rules->num_rows() > 0 ) ? $rules->result() : NULL,
@@ -107,6 +107,7 @@ class Index extends CI_Controller {
 			'active' => 0,
 			'h1' => $title,
 			'msg' => $msg,
+			'code' => (isset($code) && !empty($code)) ? $code : NULL,
 			'room_type' => $this->db->get_where('room_type', array('view_status' => 5)),
 			'title' => $this->config->item('website_name')
 		);

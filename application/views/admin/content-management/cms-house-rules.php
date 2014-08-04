@@ -13,7 +13,7 @@ if ( !is_null($rules) ) {
     <?php include(__DIR__.'/../../messages.php'); ?>
     <h1>House rules</h1>
     <?=form_open('contentmanagement/house_rules')?>
-    	<div class="form-group">
+    	<div class="form-group" style="color: #333">
     		<textarea class="ckeditor" cols="80" id="editor1" name="editor1" rows="10"><?=$content?></textarea>
         </div>
         <div class="form-group">

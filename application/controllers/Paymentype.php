@@ -8,11 +8,6 @@ class Paymentype extends CI_Controller {
     }
 
 	public function index() {
-		$access = $this->session->userdata('access');
-		if(!$access) {
-			show_404();
-		}
-
 		$msg = $this->session->flashdata('msg');
 		$query = $this->db->get_where('payment_type', array('view_status' => 5))->result();
 		$data = array(
@@ -25,11 +20,6 @@ class Paymentype extends CI_Controller {
 	}
 
 	public function create_payment_type() {
-		$access = $this->session->userdata('access');
-		if(!$access) {
-			show_404();
-		}
-
 		$query = NULL;
 		$pid = $this->input->get('pid');
 		if ($_SERVER['REQUEST_METHOD'] === 'POST'):
@@ -74,11 +64,6 @@ class Paymentype extends CI_Controller {
 	}
 
 	public function delete_room_type() {
-		$access = $this->session->userdata('access');
-		if(!$access) {
-			show_404();
-		}
-
 		$rtid = $this->input->get('rtid');
 		$query = $this->db->get_where('room_type', array('room_type_id' => $rtid), 1);
 		if(isset($rtid) && !is_null($rtid)):
@@ -127,8 +112,8 @@ class Paymentype extends CI_Controller {
 			'notes'           => $notes,
 			'transaction_status' => 1, // ( 1 = Pending / 2 = Processing / 3 = Partial / 4 = Cancelled / 5 = Paid  )
 			'view_status'     => 5,
-			'created_at'      => $now->format('Y-m-d'),
-			'modified_at'     => $now->format('Y-m-d'),
+			'created_at'      => $now, // ->format('Y-m-d')
+			'modified_at'     => $now, // ->format('Y-m-d')
 		);
 
 		// Optional upload

@@ -1,8 +1,11 @@
 <?php
 	$get = $rid = $amenities = NULL;
 	$type = "textarea";
-	foreach($rooms as $rm) {
-		$r[$rm->room_id] = $rm->room_name;
+	$r = ['' => 'No rooms yet'];
+	if ( is_array($rooms) ) {
+		foreach($rooms as $rm) {
+			$r[$rm->room_id] = $rm->room_name;
+		}
 	}
 
 	if(!is_null($amenities)) {

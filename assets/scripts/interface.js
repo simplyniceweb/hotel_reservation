@@ -24,6 +24,9 @@
 		book_info: '.book-info-',
 		customer_info: '.customer_info',
 		room_id: 0,
+		check_status: '.res_code',
+		res_code: '#res_code',
+		status_wrapper: '.reservations-wrapper'
 	}
 
 	var func = {
@@ -78,6 +81,20 @@
 					$(conf.customer_info).addClass( 'hide' );
 				});
 			})
+		},
+		check_reservation: function () {
+			return this.delegate(conf.check_status, "click", function() {
+				var me = $(this), i = me.children('i.fa'), code = $(conf.res_code).val();
+				i.addClass('fa-spin');
+				$.get( config.base_url+"reservations/check_reservations?code="+code, function( data ) {
+					if ( data == 1 ) {
+						$(conf.status_wrapper).html( '<p class="text-danger">Invalid code.</p>' );
+					} else {
+						$(conf.status_wrapper).html( data );
+					}
+					i.removeClass('fa-spin');
+				})
+			})
 		}
 	}
 
@@ -85,6 +102,7 @@
 	config.doc.amenities();
 	config.doc.show_booking_form();
 	config.doc.book_1();
+	config.doc.check_reservation();
 
 	var simplynice_conf = {
 		wrapper: '.simplyniceGallery',

@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class ContentManagement extends CI_Controller {
+class Contentmanagement extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
@@ -8,11 +8,6 @@ class ContentManagement extends CI_Controller {
     }
 
 	public function house_rules() {
-		$access = $this->session->userdata('access');
-		if(!$access) {
-			show_404();
-		}
-
 		$msg = $this->session->flashdata('msg');
 		$house_rules = $this->input->post('house-rules');
 		$rules = $this->db->get_where('house_rules', ['view_status' => 5]);

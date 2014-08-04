@@ -8,7 +8,8 @@ switch($msg) {
 			break;
 	case 'bad_email_reserved':
 			$echo = "Room reservation successful. Unfortunately we're not able to send you the details through email.";
-			$echo .= "Click the link below to resend the email.<br/><a href='".base_url()."resend/'>Resend</a>";
+			$echo .= "Click the link below to resend the email.<br/><a href='".base_url()."room/resend/".$code."'>Resend</a>";
+			$echo .= "<br/><br/>Note: Most likely you entered an invalid email address, please feel free to book a new room.";
 			break;
 	case 'max_person_error':
 			$echo = "Max persons limit reached.";

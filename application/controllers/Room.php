@@ -8,11 +8,6 @@ class Room extends CI_Controller {
     }
 
 	public function index() {
-		$access = $this->session->userdata('access');
-		if(!$access) {
-			show_404();
-		}
-
 		$msg = $this->session->flashdata('msg');
 		$this->db->select('*');
 		$this->db->from('room_type as rt');
@@ -31,11 +26,6 @@ class Room extends CI_Controller {
 	}
 
 	public function create_room() {
-		$access = $this->session->userdata('access');
-		if(!$access) {
-			show_404();
-		}
-
 		$query = NULL;
 		$rid  = $this->input->get('rid');
 		if ($_SERVER['REQUEST_METHOD'] === 'POST'):
@@ -90,11 +80,6 @@ class Room extends CI_Controller {
 	}
 
 	public function delete_room() {
-		$access = $this->session->userdata('access');
-		if(!$access) {
-			show_404();
-		}
-
 		$rid = $this->input->get('rid');
 		$query = $this->db->get_where('room', array('room_id' => $rid), 1);
 		if(isset($rid) && !is_null($rid)):
@@ -268,9 +253,11 @@ class Room extends CI_Controller {
 		self::email_reservation($reservation_id, $email_address, $code);
 	}
 
-	public function email_reservation($reservation_id = NULL, $email = NULL, $code = NULL) {
+	public function email_reservation($reservation_id = NULL, $email = NULL, $code = NULL, $action = NULL) {
 		//$to = "simplyniceweb@gmail.com";
-		$query = $this->db->get_where('reservations', array('reservation_id' => $reservation_id, 'view_status' => 5))->result();
+		// $status = ( !is_null($action) && $action == 1) ? 4 : 5;
+		$status = 5;
+		$query = $this->db->get_where('reservations', array('reservation_id' => $reservation_id, 'view_status' => $status))->result();
 		$msg = $this->load->view('email/reservation', array( 'result' => $query, 'id' => $reservation_id, 'status' => 'Pending' ), TRUE);
 
 		// Send email to the customer
@@ -283,16 +270,29 @@ class Room extends CI_Controller {
 		$this->email->message($msg);
 		$sent = $this->email->send();
 		if($sent) {
+			$status = 5;
 			$msg = "sent_reserved";
 		} else {
+			$status = 4;
 			$msg = "bad_email_reserved";
-			$object = array( 'view_status' => 4, 'modified_at' => date('Y-m-d') );
-			$this->db->where('reservation_id', $reservation_id);
-			$this->db->update('reservations', $object);
 			$this->session->set_flashdata('code', $code);
 		}
+
+
+		$object = array( 'view_status' => $status, 'modified_at' => date('Y-m-d') );
+		$this->db->where('reservation_id', $reservation_id);
+		$this->db->update('reservations', $object);
+
 		$this->session->set_flashdata('msg', $msg);
 		$this->session->set_flashdata('title', 'Room Reservation');
 		redirect('messages');
+	}
+
+	public function resend() {
+		// View status 4 should be brought back in production
+		$code = $this->uri->segment(3);
+		$reservation = $this->db->get_where('reservations', array('reservation_code' => $code), 1); // , 'view_status' => 4
+		$res = $reservation->result();
+		return self::email_reservation($res[0]->reservation_id, $res[0]->email_address, $code, 1);
 	}
 }

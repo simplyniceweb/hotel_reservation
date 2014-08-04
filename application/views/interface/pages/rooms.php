@@ -16,7 +16,7 @@ include(__DIR__.'/../nav.php');
 	$amenities = $this->Rooms_Model->get_amenities($room->room_id);
 	?>
     <span class="book-info-<?=$room->room_id?>" data-info="<?=$room->max_adult?>-<?=$room->max_child?>"></span>
-      <div class="col-sm-6 col-md-4">
+      <div class="col-sm-6 col-md-5 col-lg-4">
         <div class="thumbnail">
           <img src="<?=base_url()?>assets/images/rooms/<?=$image?>"/>
           <div class="caption">

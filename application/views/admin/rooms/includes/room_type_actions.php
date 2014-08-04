@@ -3,7 +3,7 @@
 	$get = (isset($rt->room_type_id))? '?rtid='.$rt->room_type_id : NULL;
 	$name = (isset($rt->name))? $rt->name : NULL;
 	$description = (isset($rt->description))? $rt->description : NULL;
-	$availability = (isset($rt->availability))? $rt->availability : NULL;
+	//$availability = (isset($rt->availability))? $rt->availability : NULL;
 ?>
 <?=$this->form_builder->open_form(array('action' => 'roomtype/create_room_type'.$get)); ?>
 <?php
@@ -18,10 +18,10 @@
 			'type' => 'textarea',
 			'value' => $description
 		),
-		array(
-			'id' => 'availability',
-			'value' => $availability
-		),
+		//array(
+			//'id' => 'availability',
+			//'value' => $availability
+		//),
 		array(
 			'id'   => 'submit',
 			'type' => 'submit',

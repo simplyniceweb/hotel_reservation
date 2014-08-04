@@ -8,11 +8,6 @@ class Reservations extends CI_Controller {
     }
 
 	public function index() {
-		$access = $this->session->userdata('access');
-		if(!$access) {
-			show_404();
-		}
-
 		$reservation_status = $this->uri->segment(2);
 		if ( !$reservation_status ) {
 			$reservation_status = 5;
@@ -57,5 +52,15 @@ class Reservations extends CI_Controller {
 			return $this->load->view("interface/append/invalid_date", ["object" => $query->result()]);
 		}
 		return $this->output->set_output(1);
+	}
+
+	public function check_reservations() {
+		$code = $this->input->post_get('code');
+		$query = $this->db->get_where('reservations', array('reservation_code' => $code));
+		if ($query->num_rows() < 1) {
+			return $this->output->set_output(1);
+		}
+
+		$this->load->view("interface/append/reservations", ['object' => $query->result()]);
 	}
 }

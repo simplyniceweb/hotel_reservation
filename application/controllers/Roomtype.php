@@ -8,11 +8,6 @@ class Roomtype extends CI_Controller {
     }
 
 	public function index() {
-		$access = $this->session->userdata('access');
-		if(!$access) {
-			show_404();
-		}
-
 		$msg = $this->session->flashdata('msg');
 		$query = $this->db->get_where('room_type', array('view_status' => 5));
 		$data = array(
@@ -25,22 +20,17 @@ class Roomtype extends CI_Controller {
 	}
 
 	public function create_room_type() {
-		$access = $this->session->userdata('access');
-		if(!$access) {
-			show_404();
-		}
-
 		$query = NULL;
 		$rtid  = $this->input->get('rtid');
 		if ($_SERVER['REQUEST_METHOD'] === 'POST'):
 				$now = date('Y-m-d');
 				$name = $this->input->post('name');
 				$descriptions = $this->input->post('descriptions');
-				$availability = $this->input->post('availability');
+				// $availability = $this->input->post('availability');
 				$data = array(
 					'name' => $name,
 					'description'  => $descriptions,
-					'availability' => $availability,
+					// 'availability' => $availability,
 					'view_status'  => 5,
 					'created_at'   => $now,
 					'modified_at'  => $now,
@@ -73,11 +63,6 @@ class Roomtype extends CI_Controller {
 	}
 
 	public function delete_room_type() {
-		$access = $this->session->userdata('access');
-		if(!$access) {
-			show_404();
-		}
-
 		$rtid = $this->input->get('rtid');
 		$query = $this->db->get_where('room_type', array('room_type_id' => $rtid), 1);
 		if(isset($rtid) && !is_null($rtid)):

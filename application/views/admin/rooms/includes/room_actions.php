@@ -1,10 +1,14 @@
 <?php
-	foreach($room_types as $rt):
-		$room_type[$rt->room_type_id] = $rt->name; 
-	endforeach;
+	$room_type = ['' => 'No room type yet'];
+	if ( is_array($room_types) ) {
+		foreach($room_types as $rt):
+			$room_type[$rt->room_type_id] = $rt->name; 
+		endforeach;
+	}
 
 	$room   = (isset($room[0]))? $room[0] : NULL;
 	$get = (isset($room->room_id))? '?rid='.$room->room_id : NULL;
+	$rtype_id = (isset($room->room_type_id))? $room->room_type_id : NULL;
 	$name = (isset($room->room_name))? $room->room_name : NULL;
 	$desc = (isset($room->room_description))? $room->room_description : NULL;
 	$room_number = (isset($room->room_number))? $room->room_number : NULL;
@@ -48,7 +52,8 @@
 		array(
 			'id' => 'room_type_id',
 			'type' => 'dropdown',
-			'options' => $room_type
+			'options' => $room_type,
+			'value' => $rtype_id,
 		),
 		array(
 			'id'   => 'submit',

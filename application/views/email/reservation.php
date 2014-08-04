@@ -1,4 +1,5 @@
 <?php
+$base = base_url();
 $webname = $this->config->item('website_name');
 if(base_url() == 'http://localhost/hotel_reservation/') {
 	$base = 'http://hotel-reservation.fulba.com/';
@@ -33,7 +34,7 @@ table tbody tr td {
     <p>Dear <?=$title.'. '.ucfirst($row->first_name).' '.ucfirst($row->last_name)?>,</p>
     <?php if ($status == 'Pending'): ?>
     <p>Thank you for choosing to stay with us at the <?=$webname?>. We are pleased to confirm your reservation as follows:</p>
-    <p style="color:#FF0004">Note: Please keep the reservation code as you will use it to check reservation status and paying.</p>
+    <p style="color:#FF0004">Note: Please keep the reservation code as you will use it to check your reservation status and for payment.</p>
     <?php else: ?>
     <p>Your reservation status has been updated by our management.</p>
     <?php endif; ?>
