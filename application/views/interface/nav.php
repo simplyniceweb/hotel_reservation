@@ -3,12 +3,13 @@
 	$drop_active = (isset($drop_active))? $drop_active : NULL;
  ?>
 <div class="main_menu">
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="col-md-12 col-lg-3">
-            <img class="logo pull-left" src="<?=base_url()?>assets/icons/logo.png"/>
-           </div>
-            <div class="col-md-12 col-lg-9">
+    <div class="container">
+        <div class="row">
+        <div class="col-lg-12">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <img class="logo img-responsive" src="<?=base_url()?>assets/icons/logo.png"/>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
             <ul class="nav nav-pills pull-right">
                 <li<?php if($active==1):?> class="active"<?php endif;?>><a href="<?=base_url()?>">Home</a></li>
                 <li class="menu-drop<?php if($active==2):?> active<?php endif;?>">
@@ -51,9 +52,10 @@
                 </li>
                 <li<?php if($active==4):?> class="active"<?php endif;?>><a href="<?=base_url()?>house-rules">House Rules</a></li>
                 <li<?php if($active==5):?> class="active"<?php endif;?>><a href="<?=base_url()?>map">Map & Location</a></li>
-                <li<?php if($active==6):?> class="active"<?php endif;?>><a href="<?=base_url()?>contact">Contact Us</a></li>
+                <li<?php if($active==6):?> class="active"<?php endif;?>><a href="<?=base_url()?>contact">Contact us</a></li>
             </ul>
             </div>
+        </div>
         </div>
     </div>
 </div>

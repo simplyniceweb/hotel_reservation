@@ -14,30 +14,32 @@ body {
 
 /* Main header */
 .main_menu {
+	/*
 	max-width: 75%;
 	margin: 0 auto
+	*/
 }
-.main_menu>.container-fluid {
+.main_menu>.container {
 	line-height: 15px;
 }
-.main_menu>.container-fluid .logo {
-	width: 250px
+.main_menu>.container .logo {
+	width: 200px
 }
-.main_menu>.container-fluid .nav>li>a, .main_menu .btn-group .btn {
+.main_menu>.container .nav>li>a, .main_menu .btn-group .btn {
 	text-transform: uppercase;
 	color: #777777;
 	text-decoration: none;
 	text-shadow: 0 1px 0 #ffffff;
 	background: transparent;
 }
-.main_menu>.container-fluid .nav>li:hover {
+.main_menu>.container .nav>li:hover {
 	padding-bottom:0;
 	border-bottom: 4px solid #ff8900;
 }
-.main_menu>.container-fluid .nav>li>a:hover {
+.main_menu>.container .nav>li>a:hover {
 	background: transparent;
 }
-.main_menu>.container-fluid .nav>.active>a, .btn-group.active, .main_menu>.container-fluid .nav>.active>a:hover {
+.main_menu>.container .nav>.active>a, .btn-group.active, .main_menu>.container .nav>.active>a:hover {
 	background: #ff8900;
 	color: #FFFFFF;
 	text-shadow: none;
@@ -45,7 +47,7 @@ body {
 	-moz-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
 	box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
 }
-.main_menu>.container-fluid .nav>.active {
+.main_menu>.container .nav>.active {
 	border: none !important;
 }
 
