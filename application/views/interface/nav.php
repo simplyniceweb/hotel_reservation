@@ -6,10 +6,10 @@
     <div class="container">
         <div class="row">
         <div class="col-lg-12">
-            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <img class="logo img-responsive" src="<?=base_url()?>assets/icons/logo.png"/>
+            <div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
+            <img class="logo" src="<?=base_url()?>assets/icons/logo.png"/>
             </div>
-            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            <div class="col-lg-9 col-md-10 col-sm-12 col-xs-12">
             <ul class="nav nav-pills pull-right">
                 <li<?php if($active==1):?> class="active"<?php endif;?>><a href="<?=base_url()?>">Home</a></li>
                 <li class="menu-drop<?php if($active==2):?> active<?php endif;?>">
