@@ -66,17 +66,18 @@
 		book_1: function() {
 			return this.delegate(conf.book_room+' .process', "click", function(e){
 				e.preventDefault();
+				$('.invalid-date').remove();
+				$('.customer_info').before( '<div class="invalid-date"><i class="fa fa-spin fa-spinner"></i></div>' );
 				var c_in = $("#check_in").val(), c_out = $("#check_out").val(), id = conf.room_id;
 				$.get( config.base_url+"reservations/check_date?check_in="+c_in+"&check_out="+c_out+"&room_id="+id, function( data ) {
+					$('.invalid-date').remove();
 					if (data == 1) {
-						$('.invalid-date').remove();
 						if($(conf.customer_info).hasClass('hide')) {
 							$(conf.customer_info).removeClass('hide');
 						}
 						$(conf.book_room).animate({ scrollTop: $(conf.customer_info).offset().top}, 'slow');
 						return false;
 					}
-					$('.invalid-date').remove();
 					$('.customer_info').before( data );
 					$(conf.customer_info).addClass( 'hide' );
 				});

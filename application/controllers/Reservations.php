@@ -41,9 +41,13 @@ class Reservations extends CI_Controller {
 	}
 
 	public function check_date() {
+		$now = date('Y-m-d');
 		$room_id = $this->input->post_get('room_id');
 		$check_in = $this->input->post_get('check_in');
 		$check_out = $this->input->post_get('check_out');
+		if ($check_in < $now || $check_out < $now) {
+			return $this->load->view("interface/append/invalid_date", ["invalid" => 1, "object" => NULL]);
+		}
 
 		$arg = "SELECT * FROM `reserved_room` WHERE `check_in` BETWEEN '".$check_in."' AND '".$check_out."' OR `check_out` BETWEEN '".$check_in."' AND '".$check_out."' AND `room_id` = ".$room_id." AND `view_status` = 5";
 		$query = $this->db->query($arg);
