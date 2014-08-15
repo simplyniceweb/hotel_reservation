@@ -10,9 +10,11 @@ class Room extends CI_Controller {
 	public function index() {
 		$msg = $this->session->flashdata('msg');
 		$this->db->select('*');
-		$this->db->from('room_type as rt');
-		$this->db->join('room as r', 'r.room_type_id = rt.room_type_id');
-		$this->db->where('rt.view_status', 5);
+		$this->db->from('room as r');
+		//$this->db->from('room_type as rt');
+		//$this->db->join('room as r', 'r.room_type_id = rt.room_type_id');
+		//$this->db->and_where('r.room_type_id', 0);
+		//$this->db->where('rt.view_status', 5);
 		$this->db->where('r.view_status', 5);
 		$query = $this->db->get();
 
@@ -33,20 +35,21 @@ class Room extends CI_Controller {
 				$name = $this->input->post('name');
 				$desc = $this->input->post('room_description');
 				$room_type_id = $this->input->post('room_type_id');
-				$room_number = $this->input->post('room_number');
+				// $room_number = $this->input->post('room_number');
 				$max_adult = $this->input->post('max_adult');
 				$max_child = $this->input->post('max_child');
 				$room_rate = $this->input->post('room_rate');
-				$room_count = $this->input->post('room_count');
+				//$room_count = $this->input->post('room_count');
+
 				$data = array(
 					'room_type_id'  => $room_type_id,
 					'room_name' => $name,
 					'room_description' => $desc,
-					'room_number'  => $room_number,
+					//'room_number'  => $room_number,
 					'max_adult'    => $max_adult,
 					'max_child'    => $max_child,
 					'room_rate'    => $room_rate,
-					'room_count'   => $room_count,
+					//'room_count'   => $room_count,
 					'view_status'  => 5,
 					'created_at'   => $now,
 					'modified_at'  => $now,
@@ -56,6 +59,11 @@ class Room extends CI_Controller {
 					$this->db->where('room_id', $rid);
 					$this->db->update('room', $data); 
 				else:
+					$room_number = $this->db->select('room_number')->from('room')->order_by('room_id', 'desc')->limit(1);
+					$room_number = $this->db->get();
+					$rn = $room_number->result();
+					$data['room_number'] = (int) $rn[0]->room_number+1;
+
 					$msg = 'save';
 					$this->db->insert('room', $data);
 				endif;

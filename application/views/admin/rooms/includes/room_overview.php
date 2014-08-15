@@ -4,9 +4,10 @@
 <table class="table table-hovered table-striped">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Name</th>
-            <th>Room type</th>
-            <th>Room count</th>
+            <!--<th>Room type</th>-->
+            <!--<th>Room count</th>-->
             <th>Room number</th>
             <th>Room Rate</th>
             <th>Max adult / Max child</th>
@@ -28,9 +29,10 @@
         endif;
     ?>
         <tr>
+            <td><?=$row->room_id?></td>
             <td><?=$row->room_name?></td>
-            <td><?=$row->name?></td>
-            <td><?=$row->room_count?></td>
+            <!--<td><?=$row->name?></td>-->
+            <!--<td><?=$row->room_count?></td>-->
             <td><span class="label label-warning">#<?=$row->room_number?></span></td>
             <td><span class="label label-success"><?=$room_rate?></span></td>
             <td>

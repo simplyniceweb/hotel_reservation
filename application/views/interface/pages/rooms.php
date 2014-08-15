@@ -13,12 +13,14 @@ include(__DIR__.'/../nav.php');
 	if($rooms[2]>0) {
     foreach($rooms[0] as $room) {
 	$image = $this->Rooms_Model->get_image($room->room_id);
+	$img_url = ASSETS."images/rooms/".$image;
+	$img_url = (file_exists($img_url)) ? $img_url : "http://placehold.it/300x200";
 	$amenities = $this->Rooms_Model->get_amenities($room->room_id);
 	?>
     <span class="book-info-<?=$room->room_id?>" data-info="<?=$room->max_adult?>-<?=$room->max_child?>"></span>
       <div class="col-sm-6 col-md-5 col-lg-4">
         <div class="thumbnail">
-          <img src="<?=base_url()?>assets/images/rooms/<?=$image?>"/>
+            <img src="<?=$img_url?>">
           <div class="caption">
             <h3><?=$room->room_name?></h3>
             <p><?=$room->room_description?>.</p>

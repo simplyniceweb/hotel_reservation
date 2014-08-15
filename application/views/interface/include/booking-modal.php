@@ -80,7 +80,8 @@
 		),
 		array(
 			'id' => 'zip_postal',
-			'required' => 'required'
+			'required' => 'required',
+			'onkeypress' => 'return isNumber(event, 1)',
 		),
 		array(
 			'id'   => 'Reserve',

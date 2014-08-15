@@ -15,7 +15,7 @@
 	$max_adult = (isset($room->max_adult))? $room->max_adult : NULL;
 	$max_child = (isset($room->max_child))? $room->max_child : NULL;
 	$room_rate = (isset($room->room_rate))? $room->room_rate : NULL;
-	$room_count = (isset($room->room_count))? $room->room_count : NULL;
+	//$room_count = (isset($room->room_count))? $room->room_count : NULL;
 ?>
 <?=$this->form_builder->open_form(array('action' => 'room/create_room'.$get)); ?>
 <?php
@@ -23,7 +23,9 @@
 	array(
 		array(
 			'id' => 'room_number',
-			'value' => $room_number
+			'value' => $room_number,
+			'disabled' => TRUE,
+			'placeholder' => 'Auto Generated'
 		),
 		array(
 			'id' => 'name',
@@ -35,20 +37,23 @@
 		),
 		array(
 			'id' => 'max_adult',
-			'value' => $max_adult
+			'value' => $max_adult,
+			'onkeypress' => 'return isNumber(event, 0)',
 		),
 		array(
 			'id' => 'max_child',
-			'value' => $max_child
+			'value' => $max_child,
+			'onkeypress' => 'return isNumber(event, 0)',
 		),
 		array(
 			'id' => 'room_rate',
-			'value' => $room_rate
+			'value' => $room_rate,
+			'onkeypress' => 'return isNumber(event, 0)',
 		),
-		array(
-			'id' => 'room_count',
-			'value' => $room_count
-		),
+		//array(
+			//'id' => 'room_count',
+			//'value' => $room_count
+		//),
 		array(
 			'id' => 'room_type_id',
 			'type' => 'dropdown',

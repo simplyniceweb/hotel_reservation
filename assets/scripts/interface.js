@@ -7,6 +7,22 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
+function isNumber(evt, data) {
+	if (data == 1) {
+		var zip = $("#zip_postal").val();
+		if ( zip.length > 3 ) {
+			return false;
+		}
+	}
+
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+
 (function () {
 
 	if($('#slider').length>0) {
