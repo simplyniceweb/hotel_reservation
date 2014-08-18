@@ -13,8 +13,8 @@ include(__DIR__.'/../nav.php');
 	if($rooms[2]>0) {
     foreach($rooms[0] as $room) {
 	$image = $this->Rooms_Model->get_image($room->room_id);
-	$img_url = ASSETS."images/rooms/".$image;
-	$img_url = (file_exists($img_url)) ? $img_url : "http://placehold.it/300x200";
+	$img_url = "assets/images/rooms/".$image;
+	$img_url = (file_exists($img_url)) ? base_url() . $img_url : "http://placehold.it/280x200";
 	$amenities = $this->Rooms_Model->get_amenities($room->room_id);
 	?>
     <span class="book-info-<?=$room->room_id?>" data-info="<?=$room->max_adult?>-<?=$room->max_child?>"></span>

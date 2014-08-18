@@ -1,6 +1,6 @@
 <?php
 // 0 = Localhost || 1 = Web server
-define('HOTEL', 0);
+define('HOTEL', 1);
 /**
  * CodeIgniter
  *
