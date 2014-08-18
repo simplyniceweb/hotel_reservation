@@ -41,7 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $url = array('http://localhost/hotel_reservation','http://hotel-reservation.fulba.com');
-$config['base_url']	= $url[0];
+$config['base_url']	= (HOTEL == 0) ? $url[0] : $url[1];
 
 /*
 |--------------------------------------------------------------------------
