@@ -9,6 +9,7 @@ $booking_details = array(
 	array(
 		'id'   => 'reservation_code',
 		'autofocus' => true,
+		'class' => 'trimmable',
 		'required' => 'required'
 	),
 	array(
@@ -20,11 +21,13 @@ $booking_details = array(
 	array(
 		'id'   => 'notes',
 		'type' => 'textarea',
+		'class' => 'trimmable',
 		'required' => 'required'
 	),
 	array(
 		'id'   => 'userfile',
 		'type' => 'upload',
+		'class' => 'trimmable',
 		'label' => 'Proof of payment',
 		'required' => 'required'
 	),

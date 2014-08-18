@@ -5,6 +5,7 @@ $contact_fields = array(
 	array(
 		'id' => 'full_name',
 		'required' => 'required',
+		'class' => 'trimmable',
 		'autofocus' => TRUE
 	),
 	array(
@@ -15,6 +16,7 @@ $contact_fields = array(
 	array(
 		'id' => 'message',
 		'type' => 'textarea',
+		'class' => 'trimmable',
 		'required' => 'required'
 	),
 	array(
