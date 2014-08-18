@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 04, 2014 at 02:42 PM
+-- Generation Time: Aug 18, 2014 at 08:00 AM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.19
 
@@ -189,6 +189,29 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `modified_at` date NOT NULL,
   PRIMARY KEY (`transaction_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `view_status` int(5) NOT NULL,
+  `created_at` date NOT NULL,
+  `modified_at` date NOT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `email`, `password`, `view_status`, `created_at`, `modified_at`) VALUES
+(1, 'admin@layacocogrove.com', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 5, '2014-08-18', '2014-08-18');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
