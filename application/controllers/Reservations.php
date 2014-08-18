@@ -5,6 +5,7 @@ class Reservations extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->config->load('custom');
+		$this->load->helper('form');
     }
 
 	public function index() {
@@ -66,5 +67,39 @@ class Reservations extends CI_Controller {
 		}
 
 		$this->load->view("interface/append/reservations", ['object' => $query->result()]);
+	}
+
+	public function search() {
+		$status = (int) $this->input->post('status');
+		$keyword = $this->input->post('keyword');
+
+		if ($status == 1) {
+			$active = 5;
+		} else if ($status == 2) {
+			$active = 1;
+		} else if ($status == 3) {
+			$active = 6;
+		}
+
+		$query = $this->db->select('*')
+				->from('reservations')
+				->like('view_status', $active, 'none')
+				->like('reservation_code', $keyword)
+				->or_like('first_name', $keyword)
+				->or_like('last_name', $keyword)
+				->or_like('email_address', $keyword)
+				->or_like('address', $keyword)
+				->or_like('city', $keyword)
+				->or_like('province', $keyword)
+				->or_like('zip_postal', $keyword);
+		$query = $this->db->get();
+
+		$data = array(
+			'active' => $status,
+			'msg'    => NULL,
+			'title'  => $this->config->item('website_name') . '- Dashboard',
+			'reservations' => $query
+		);
+		$this->load->view("admin/payments/reservations", $data);
 	}
 }
