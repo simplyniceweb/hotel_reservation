@@ -25,6 +25,7 @@ class Roomtype extends CI_Controller {
 	}
 
 	public function create_room_type() {
+		$msg = $this->session->flashdata('msg');
 		$mysession = $this->session->userdata('logged');
 		if(!$mysession) {
 			show_404();
@@ -34,9 +35,15 @@ class Roomtype extends CI_Controller {
 		$rtid  = $this->input->get('rtid');
 		if ($_SERVER['REQUEST_METHOD'] === 'POST'):
 				$now = date('Y-m-d');
-				$name = $this->input->post('name');
-				$descriptions = $this->input->post('descriptions');
+				$name = trim($this->input->post('name'));
+				$descriptions = trim($this->input->post('descriptions'));
 				// $availability = $this->input->post('availability');
+
+				if (empty($name) || empty($descriptions)) {
+					$this->session->set_flashdata('msg', 'All fields are required.');
+					redirect('roomtype/create_room_type');
+				}
+
 				$data = array(
 					'name' => $name,
 					'description'  => $descriptions,
@@ -67,6 +74,7 @@ class Roomtype extends CI_Controller {
 		$data = array(
 			'active'    => 2,
 			'room_type' => $query,
+			'msg'    => (isset($msg))? $msg : NULL,
 			'title'     => $this->config->item('website_name') . '- Create Room Types'
 		);
 		$this->load->view("admin/rooms/room_types", $data);

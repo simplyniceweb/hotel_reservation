@@ -25,6 +25,7 @@ class Paymentype extends CI_Controller {
 	}
 
 	public function create_payment_type() {
+		$msg = $this->session->flashdata('msg');
 		$mysession = $this->session->userdata('logged');
 		if(!$mysession) {
 			show_404();
@@ -34,10 +35,16 @@ class Paymentype extends CI_Controller {
 		$pid = $this->input->get('pid');
 		if ($_SERVER['REQUEST_METHOD'] === 'POST'):
 			$now = date('Y-m-d');
-			$payment_name = $this->input->post('payment_name');
-			$recipient_name = $this->input->post('recipient_name');
-			$address = $this->input->post('recipient_address');
-			$phone = $this->input->post('recipient_phone');
+			$payment_name = trim($this->input->post('payment_name'));
+			$recipient_name = trim($this->input->post('recipient_name'));
+			$address = trim($this->input->post('recipient_address'));
+			$phone = trim($this->input->post('recipient_phone'));
+
+				if (empty($payment_name) || empty($recipient_name) || empty($address) || empty($phone)) {
+					$this->session->set_flashdata('msg', 'All fields are required.');
+					redirect('paymentype/create_payment_type');
+				}
+
 			$data = array(
 				'payment_name' => $payment_name,
 				'recipient_name' => $recipient_name,
@@ -68,6 +75,7 @@ class Paymentype extends CI_Controller {
 		$data = array(
 			'active'    => 2,
 			'payment_type' => $query,
+			'msg'    => (isset($msg))? $msg : NULL,
 			'title'     => $this->config->item('website_name') . '- Create Room Types'
 		);
 		$this->load->view("admin/payments/paymentype", $data);

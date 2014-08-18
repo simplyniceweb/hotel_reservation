@@ -33,6 +33,7 @@ class Room extends CI_Controller {
 	}
 
 	public function create_room() {
+		$msg = $this->session->flashdata('msg');
 		$mysession = $this->session->userdata('logged');
 		if(!$mysession) {
 			show_404();
@@ -42,14 +43,18 @@ class Room extends CI_Controller {
 		$rid  = $this->input->get('rid');
 		if ($_SERVER['REQUEST_METHOD'] === 'POST'):
 				$now = date('Y-m-d');
-				$name = $this->input->post('name');
-				$desc = $this->input->post('room_description');
-				$room_type_id = $this->input->post('room_type_id');
+				$name = trim($this->input->post('name'));
+				$desc = trim($this->input->post('room_description'));
+				$room_type_id = trim($this->input->post('room_type_id'));
 				// $room_number = $this->input->post('room_number');
-				$max_adult = $this->input->post('max_adult');
-				$max_child = $this->input->post('max_child');
-				$room_rate = $this->input->post('room_rate');
+				$max_adult = trim($this->input->post('max_adult'));
+				$max_child = trim($this->input->post('max_child'));
+				$room_rate = trim($this->input->post('room_rate'));
 				//$room_count = $this->input->post('room_count');
+				if ( empty($name) || empty($desc) || empty($max_adult) || empty($max_child) || empty($room_rate) ) {
+					$this->session->set_flashdata('msg', 'All fields are required.');
+					redirect('room/create_room');
+				}
 
 				$data = array(
 					'room_type_id'  => $room_type_id,
@@ -91,6 +96,7 @@ class Room extends CI_Controller {
 		$data = array(
 			'active' => 2,
 			'room'   => $query,
+			'msg'    => (isset($msg))? $msg : NULL,
 			'room_types' => $this->db->get_where('room_type', array('view_status' => 5))->result(),
 			'title'  => $this->config->item('website_name') . '- Create Room'
 		);
@@ -134,7 +140,7 @@ class Room extends CI_Controller {
 			redirect('');
 		}
 
-		$query = $this->db->get_where('room', array('room.room_type_id' => $room_type_id, 'room_count > ' => 0,  'view_status' => 5));
+		$query = $this->db->get_where('room', array('room.room_type_id' => $room_type_id,  'view_status' => 5));
 		$result = array($query->result(), $check->result(), $query->num_rows());
 
 		$data = array(

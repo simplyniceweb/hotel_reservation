@@ -12,20 +12,24 @@
 	array(
 		array(
 			'id' => 'payment_name',
-			'value' => $pname
+			'value' => $pname,
+			'required' => TRUE
 		),
 		array(
 			'id' => 'recipient_name',
-			'value' => $rname
+			'value' => $rname,
+			'required' => TRUE
 		),
 		array(
 			'id' => 'recipient_phone',
-			'value' => $rphone
+			'value' => $rphone,
+			'required' => TRUE
 		),
 		array(
 			'id' => 'recipient_address',
 			'type'  => 'textarea',
-			'value' => $address
+			'value' => $address,
+			'required' => TRUE
 		),
 		array(
 			'id'   => 'submit',

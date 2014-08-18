@@ -32,6 +32,7 @@ class Roomamenities extends CI_Controller {
 	}
 
 	public function create_room_amenities() {
+		$msg = $this->session->flashdata('msg');
 		$mysession = $this->session->userdata('logged');
 		if(!$mysession) {
 			show_404();
@@ -39,10 +40,10 @@ class Roomamenities extends CI_Controller {
 
 		$query = NULL;
 		$raid  = $this->input->get('raid');
-		if ($_SERVER['REQUEST_METHOD'] === 'POST'):
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$now = date('Y-m-d');
 			$room_id = $this->input->post('room_id');
-			$amenities = $this->input->post('amenities');
+			$amenities = trim($this->input->post('amenities'));
 			if(isset($amenities) && !empty($amenities)):
 				$amenities_array = explode("*", $amenities);
 				if(!is_array($amenities_array) || isset($raid) && is_numeric($raid)) {
@@ -76,24 +77,32 @@ class Roomamenities extends CI_Controller {
 					endforeach;
 				}
 			else:
-				$msg = "null";
+				$this->session->set_flashdata('msg', 'All fields are required.');
+				redirect('roomamenities/create_room_amenities');
 			endif;
 
 			$this->session->set_flashdata('msg', $msg);
 			redirect('roomamenities');
 
-			else:
+		}
+		else {
 				if(isset($raid) && !is_null($raid)):
-					$query = $this->db->get_where('room_amenities', array('room_amenities_id' => $raid), 1)->result();
+					$query = $this->db->get_where('room_amenities', array('room_amenities_id' => $raid), 1);
+					if ($query->num_rows() > 0) :
+						$query = $query->result();
+						else:
+						$query = NULL;
+					endif;
 				endif;
 
 				$this->load->helper('form');
 				$this->load->library('form_builder');
-		endif;
+		}
 
 		$data = array(
 			'active' => 2,
 			'amenities' => $query,
+			'msg'    => (isset($msg))? $msg : NULL,
 			'rooms'   => $this->db->get_where('room', array('view_status' => 5))->result(),
 			'title'  => $this->config->item('website_name') . '- Create Room Amenities'
 		);

@@ -11,12 +11,14 @@
 	array(
 		array(
 			'id' => 'name',
-			'value' => $name
+			'value' => $name,
+			'required' => TRUE
 		),
 		array(
 			'id' => 'descriptions',
 			'type' => 'textarea',
-			'value' => $description
+			'value' => $description,
+			'required' => TRUE
 		),
 		//array(
 			//'id' => 'availability',

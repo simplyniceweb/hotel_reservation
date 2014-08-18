@@ -50,32 +50,39 @@
 		),
 		array(
 			'id' => 'first_name',
+			'class' => 'trimmable',
 			'required' => 'required'
 		),
 		array(
 			'id' => 'last_name',
+			'class' => 'trimmable',
 			'required' => 'required'
 		),
 		array(
 			'id' => 'email_address',
 			'type' => 'email',
+			'class' => 'trimmable',
 			'required' => 'required'
 		),
 		array(
 			'id' => 'confirm_email_address',
 			'type' => 'email',
+			//'class' => 'trimmable',
 			'required' => 'required'
 		),
 		array(
 			'id' => 'address',
+			'class' => 'trimmable',
 			'required' => 'required'
 		),
 		array(
 			'id' => 'city',
+			'class' => 'trimmable',
 			'required' => 'required'
 		),
 		array(
 			'id' => 'province',
+			'class' => 'trimmable',
 			'required' => 'required'
 		),
 		array(
@@ -98,7 +105,7 @@
         <h4 class="modal-title">Booking Form</h4>
       </div>
       <div class="modal-body">
-      	<?=$this->form_builder->open_form(array('action' => 'book', 'method' => 'get'))?>
+      	<?=$this->form_builder->open_form(array('action' => 'book', 'method' => 'get', 'id' => 'booking_form'))?>
         <h4 class="text-info">Booking Details</h4>
         <p class="text-warning">We will send you the booking details and other informations through email, please input a valid/working email address or else everything will be invalid. This is for security purpose.</p>
         <hr/>

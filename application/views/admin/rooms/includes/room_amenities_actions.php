@@ -1,5 +1,5 @@
 <?php
-	$get = $rid = $amenities = NULL;
+	$get = $rid = NULL;
 	$type = "textarea";
 	$r = ['' => 'No rooms yet'];
 	if ( is_array($rooms) ) {
@@ -25,13 +25,15 @@
 			'id' => 'room_id',
 			'type' => 'dropdown',
 			'options' => $r,
-			'value' => $rid
+			'value' => $rid,
+			'required' => TRUE,
 		),
 		array(
 			'id' => 'amenities',
 			'type' => (is_null($type))? $type : 'textarea',
 			'placeholder' => (is_null($type))? $type : 'Seperated by asterisk, e.g. aircon*double bed',
-			'value' => $amenities
+			'value' => $amenities,
+			'required' => TRUE,
 		),
 		array(
 			'id'   => 'submit',

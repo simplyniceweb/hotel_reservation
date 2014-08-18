@@ -29,26 +29,31 @@
 		),
 		array(
 			'id' => 'name',
-			'value' => $name
+			'value' => $name,
+			'required' => TRUE,
 		),
 		array(
 			'id' => 'room_description',
-			'value' => $desc
+			'value' => $desc,
+			'required' => TRUE,
 		),
 		array(
 			'id' => 'max_adult',
 			'value' => $max_adult,
 			'onkeypress' => 'return isNumber(event, 0)',
+			'required' => TRUE,
 		),
 		array(
 			'id' => 'max_child',
 			'value' => $max_child,
 			'onkeypress' => 'return isNumber(event, 0)',
+			'required' => TRUE,
 		),
 		array(
 			'id' => 'room_rate',
 			'value' => $room_rate,
 			'onkeypress' => 'return isNumber(event, 0)',
+			'required' => TRUE,
 		),
 		//array(
 			//'id' => 'room_count',
@@ -59,6 +64,7 @@
 			'type' => 'dropdown',
 			'options' => $room_type,
 			'value' => $rtype_id,
+			'required' => TRUE,
 		),
 		array(
 			'id'   => 'submit',

@@ -25,6 +25,19 @@ function isNumber(evt, data) {
 
 (function () {
 
+    $(".trimmable").keypress(function(event){
+		var str = $(this).val();
+        var inputValue = event.which;
+		if (inputValue == 32 && str.length == 0) {
+			return false;
+		}
+        //if digits or not a space then don't let keypress work.
+        if (inputValue == 32 || (inputValue > 64 && inputValue < 91) || (inputValue > 96 && inputValue < 123)) {
+			$(this).val(str.trim());
+			return true;
+        }
+    });
+
 	if($('#slider').length>0) {
 		$('#slider').nivoSlider();
 	}
