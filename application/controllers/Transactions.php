@@ -8,6 +8,11 @@ class Transactions extends CI_Controller {
     }
 
 	public function index() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$transaction_status = $this->uri->segment(2);
 		if ( !$transaction_status ) {
 			$transaction_status = 1;

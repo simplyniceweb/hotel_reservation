@@ -8,8 +8,8 @@ class Admin extends CI_Controller {
     }
 
 	public function index() {
-		$access = $this->session->userdata('access');
-		if(!$access) {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
 			show_404();
 		}
 

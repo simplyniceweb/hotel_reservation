@@ -9,6 +9,11 @@ class Reservations extends CI_Controller {
     }
 
 	public function index() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$reservation_status = $this->uri->segment(2);
 		if ( !$reservation_status ) {
 			$reservation_status = 5;
@@ -70,6 +75,11 @@ class Reservations extends CI_Controller {
 	}
 
 	public function search() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$status = (int) $this->input->post('status');
 		$keyword = $this->input->post('keyword');
 

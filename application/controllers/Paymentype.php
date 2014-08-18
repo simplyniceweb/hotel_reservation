@@ -8,6 +8,11 @@ class Paymentype extends CI_Controller {
     }
 
 	public function index() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$msg = $this->session->flashdata('msg');
 		$query = $this->db->get_where('payment_type', array('view_status' => 5))->result();
 		$data = array(
@@ -20,6 +25,11 @@ class Paymentype extends CI_Controller {
 	}
 
 	public function create_payment_type() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$query = NULL;
 		$pid = $this->input->get('pid');
 		if ($_SERVER['REQUEST_METHOD'] === 'POST'):
@@ -64,6 +74,11 @@ class Paymentype extends CI_Controller {
 	}
 
 	public function delete_room_type() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$rtid = $this->input->get('rtid');
 		$query = $this->db->get_where('room_type', array('room_type_id' => $rtid), 1);
 		if(isset($rtid) && !is_null($rtid)):

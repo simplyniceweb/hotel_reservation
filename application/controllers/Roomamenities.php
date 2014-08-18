@@ -8,6 +8,11 @@ class Roomamenities extends CI_Controller {
     }
 
 	public function index() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$msg = $this->session->flashdata('msg');
 		$this->db->select('ra.room_amenities_id as a_id, ra.amenities_name as a_name, r.room_id as room_id, r.room_name as name, r.room_number as number');
 		$this->db->from('room_amenities as ra');
@@ -27,6 +32,11 @@ class Roomamenities extends CI_Controller {
 	}
 
 	public function create_room_amenities() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$query = NULL;
 		$raid  = $this->input->get('raid');
 		if ($_SERVER['REQUEST_METHOD'] === 'POST'):
@@ -91,6 +101,11 @@ class Roomamenities extends CI_Controller {
 	}
 
 	public function delete_room_amenities() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$raid = $this->input->get('raid');
 		$query = $this->db->get_where('room_amenities', array('room_amenities_id' => $raid), 1);
 		if(isset($raid) && is_numeric($raid) && $query->num_rows()>0):

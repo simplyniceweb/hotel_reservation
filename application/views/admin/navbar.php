@@ -12,6 +12,9 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li class="active"><a href="<?=base_url()?>admin">Home</a></li>
+        <?php if ($this->session->userdata('logged')) { ?>
+        <li><a href="<?=base_url()?>logout">Logout</a></li>
+        <?php } ?>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<li class="dropdown">

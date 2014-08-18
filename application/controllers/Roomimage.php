@@ -11,6 +11,11 @@ class Roomimage extends CI_Controller {
     }
 
 	public function index() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$this->db->select('rm.room_image_id as image_id, r.room_id as room_id, r.room_name as name, r.room_number as number');
 		$this->db->from('room_images as rm');
 		$this->db->join('room as r', 'r.room_id = rm.room_id');
@@ -38,6 +43,11 @@ class Roomimage extends CI_Controller {
 	}
 
 	public function create_room_image() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		if ($_SERVER['REQUEST_METHOD'] === 'POST'):
 			$x = 0;
 			$now = date('Y-m-d');
@@ -193,6 +203,11 @@ class Roomimage extends CI_Controller {
 	}
 
 	public function delete_room_image() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$x = 0;
 		$rid = $this->input->get('rid');
 		$query = $this->db->get_where('room_images', array('room_id' => $rid, 'view_status' => 5));

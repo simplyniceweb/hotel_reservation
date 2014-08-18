@@ -8,6 +8,11 @@ class Room extends CI_Controller {
     }
 
 	public function index() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$msg = $this->session->flashdata('msg');
 		$this->db->select('*');
 		$this->db->from('room as r');
@@ -28,6 +33,11 @@ class Room extends CI_Controller {
 	}
 
 	public function create_room() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$query = NULL;
 		$rid  = $this->input->get('rid');
 		if ($_SERVER['REQUEST_METHOD'] === 'POST'):
@@ -88,6 +98,11 @@ class Room extends CI_Controller {
 	}
 
 	public function delete_room() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$rid = $this->input->get('rid');
 		$query = $this->db->get_where('room', array('room_id' => $rid), 1);
 		if(isset($rid) && !is_null($rid)):

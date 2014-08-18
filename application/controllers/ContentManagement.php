@@ -8,6 +8,11 @@ class Contentmanagement extends CI_Controller {
     }
 
 	public function house_rules() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$msg = $this->session->flashdata('msg');
 		$house_rules = $this->input->post('house-rules');
 		$rules = $this->db->get_where('house_rules', ['view_status' => 5]);

@@ -8,6 +8,11 @@ class Roomtype extends CI_Controller {
     }
 
 	public function index() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$msg = $this->session->flashdata('msg');
 		$query = $this->db->get_where('room_type', array('view_status' => 5));
 		$data = array(
@@ -20,6 +25,11 @@ class Roomtype extends CI_Controller {
 	}
 
 	public function create_room_type() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$query = NULL;
 		$rtid  = $this->input->get('rtid');
 		if ($_SERVER['REQUEST_METHOD'] === 'POST'):
@@ -63,6 +73,11 @@ class Roomtype extends CI_Controller {
 	}
 
 	public function delete_room_type() {
+		$mysession = $this->session->userdata('logged');
+		if(!$mysession) {
+			show_404();
+		}
+
 		$rtid = $this->input->get('rtid');
 		$query = $this->db->get_where('room_type', array('room_type_id' => $rtid), 1);
 		if(isset($rtid) && !is_null($rtid)):
